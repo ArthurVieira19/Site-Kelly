@@ -23,3 +23,6 @@ npm-debug.log*
 # editor
 .vscode/*
 !.vscode/extensions.json
+
+# Claude Code local runtime state
+.claude/
