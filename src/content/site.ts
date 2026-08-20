@@ -72,8 +72,7 @@ export const hero = {
     "Um espaço seguro para compreender suas emoções, reconstruir sua identidade e viver com mais leveza. Atendimento presencial em Nova Odessa e online para todo o Brasil.",
   ctaPrimary: "Conversar pelo WhatsApp",
   ctaSecondary: "Entender como funciona",
-  imageAlt:
-    "Kelly Cavalcante, psicóloga clínica, sentada em uma poltrona, em um ambiente acolhedor e iluminado",
+  imageAlt: "Kelly Cavalcante, psicóloga clínica, sorrindo em seu espaço de atendimento",
 } as const;
 
 export const identification = {
@@ -117,7 +116,7 @@ export const about = {
       text: "Ciência e cuidado guiando cada etapa do processo.",
     },
   ],
-  imageAlt: "Retrato de Kelly Cavalcante, psicóloga clínica",
+  imageAlt: "Retrato de Kelly Cavalcante, psicóloga clínica, em seu espaço de atendimento",
 } as const;
 
 export const howItWorks = {

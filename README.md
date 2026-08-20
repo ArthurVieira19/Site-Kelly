@@ -1,6 +1,6 @@
 # Site Kelly Cavalcante — Psicóloga Clínica
 
-Landing page one-page em Astro 5 + Tailwind CSS 4, construída a partir do briefing em [CLAUDE.md](./CLAUDE.md).
+Landing page one-page em Astro 5 + Tailwind CSS 4, construída a partir do briefing em [CLAUDE.md](./CLAUDE.md). [PRODUCT.md](./PRODUCT.md) e [DESIGN.md](./DESIGN.md) resumem esse briefing em formato estratégico/visual para orientar ajustes futuros de design.
 
 ## Rodar o projeto
 
@@ -31,7 +31,7 @@ Depois de preencher o endereço real, ajuste também `contact.address.lat`/`lng`
 
 ### Imagens ainda pendentes
 - **Grid do Instagram** (seção "Conteúdo"): hoje são blocos decorativos com ícones de linha, não prints reais — como pedido no briefing, prints reais dos posts não foram enviados. Basta substituir o componente `InstagramSection.astro` por imagens reais quando estiverem disponíveis.
-- As 4 fotos reais fornecidas (`Arquivos Kelly/`) já foram usadas e otimizadas em `src/assets/images/`: retrato do hero, retrato da seção Sobre, foto do consultório e foto do atendimento online. Se a cliente enviar fotos profissionais novas, é só trocar os arquivos importados em `Hero.astro`, `Sobre.astro` e `Modalidades.astro`.
+- As 4 fotos reais fornecidas (`Arquivos Kelly/`) já foram usadas e otimizadas em `src/assets/images/`: `sobre-retrato.png` no Hero, `retrato-perfil.jpg` na seção Sobre, `consultorio.jpg` e `trabalho-online.jpg` em Modalidades. Se a cliente enviar fotos profissionais novas, é só trocar os arquivos importados em `Hero.astro`, `Sobre.astro` e `Modalidades.astro`.
 
 ## Decisões tomadas em cima do briefing
 
@@ -51,7 +51,7 @@ Astro 5 · Tailwind CSS 4 (`@theme` em `src/styles/global.css`) · TypeScript st
 - `npx astro check` — 0 erros.
 - `npx astro build` — build de produção limpo, 3 páginas.
 - JS total inline ≈ 700 bytes gzip (orçamento do briefing: < 30KB).
-- Auditoria automática de acessibilidade (axe-core, regras WCAG 2.0/2.1 A e AA) — 0 violações em `/` e `/privacidade`.
+- Auditoria automática de acessibilidade (axe-core, regras WCAG 2.0/2.1 A e AA) — 0 violações em `/privacidade`. Em `/`, o axe aponta contraste insuficiente em alguns cards/itens de FAQ abaixo da dobra — é falso positivo do teste estático: esses elementos usam a animação de revelação ao rolar (`opacity: 0` até entrar na viewport) e o axe não simula rolagem, então os flagra "invisíveis com baixo contraste" no estado inicial. Optei por manter `opacity` (não `visibility: hidden`) de propósito: `visibility: hidden` resolveria o aviso do axe, mas tiraria esses itens da ordem de tabulação por teclado até serem rolados para a tela — pior para acessibilidade real do que o aviso que resolve. Verificado manualmente com rolagem real (Playwright) que todo o conteúdo alcança contraste AA assim que revelado.
 - Testado visualmente em viewport mobile (390px) e desktop (1440px).
 
 **Ainda recomendado antes de publicar:**
