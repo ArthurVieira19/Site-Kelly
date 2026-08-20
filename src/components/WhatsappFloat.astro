@@ -1,0 +1,38 @@
+---
+import Icon from "./Icon.astro";
+import { whatsappUrl } from "../content/site";
+---
+
+<a
+  href={whatsappUrl()}
+  target="_blank"
+  rel="noopener noreferrer"
+  aria-label="Conversar com Kelly Cavalcante pelo WhatsApp"
+  data-whatsapp-float
+  class="fixed bottom-6 right-6 z-40 flex h-14 w-14 translate-y-24 items-center justify-center rounded-full bg-sage text-coffee opacity-0 shadow-[0_10px_30px_-8px_rgba(92,75,67,0.45)] transition-all duration-500 [transition-timing-function:var(--ease-calm)] hover:brightness-95 sm:bottom-8 sm:right-8"
+>
+  <Icon name="whatsapp" class="h-7 w-7" />
+</a>
+
+<script>
+  const float = document.querySelector<HTMLElement>("[data-whatsapp-float]");
+  const hero = document.getElementById("hero");
+
+  if (float) {
+    if (!hero || !("IntersectionObserver" in window)) {
+      float.classList.remove("opacity-0", "translate-y-24");
+    } else {
+      const io = new IntersectionObserver(
+        ([entry]) => {
+          if (entry.isIntersecting) {
+            float.classList.add("opacity-0", "translate-y-24");
+          } else {
+            float.classList.remove("opacity-0", "translate-y-24");
+          }
+        },
+        { threshold: 0 },
+      );
+      io.observe(hero);
+    }
+  }
+</script>

@@ -1,0 +1,106 @@
+---
+import Base from "../layouts/Base.astro";
+import Container from "../components/Container.astro";
+import Icon from "../components/Icon.astro";
+import { professional, contact } from "../content/site";
+
+const lastUpdated = new Intl.DateTimeFormat("pt-BR", {
+  day: "2-digit",
+  month: "long",
+  year: "numeric",
+}).format(new Date());
+---
+
+<Base
+  title={`Política de Privacidade | ${professional.shortName}`}
+  description="Política de privacidade do site de Kelly Cavalcante, psicóloga clínica: dados coletados, finalidade, base legal e direitos do titular conforme a LGPD."
+>
+  <section class="section-padding">
+    <Container class="max-w-3xl">
+      <a href="/#top" class="tap-target inline-flex items-center gap-2 text-sm font-semibold text-graphite hover:text-terracotta">
+        <Icon name="arrow-right" class="h-4 w-4 rotate-180" />
+        Voltar ao site
+      </a>
+
+      <p class="eyebrow mt-8">Privacidade</p>
+      <h1 class="mt-3 text-4xl md:text-5xl">Política de Privacidade</h1>
+      <p class="measure mt-4 text-graphite">Última atualização: {lastUpdated}.</p>
+
+      <div class="measure mt-10 space-y-8 text-graphite">
+        <div>
+          <h2 class="text-2xl">Controlador dos dados</h2>
+          <p class="mt-2">
+            {professional.fullName}, {professional.role} ({professional.crpLabel}), é a
+            controladora responsável pelos dados tratados por meio deste site. Contato:{" "}
+            {contact.email}.
+          </p>
+        </div>
+
+        <div>
+          <h2 class="text-2xl">Dados coletados</h2>
+          <p class="mt-2">
+            Este site não possui formulários e não coleta dados pessoais diretamente. Ao clicar
+            no botão do WhatsApp, você é direcionado ao aplicativo WhatsApp, onde a conversa
+            segue as políticas de privacidade da Meta/WhatsApp, independentes deste site.
+          </p>
+          <p class="mt-2">
+            Atualmente, este site não utiliza cookies de rastreamento nem ferramentas de
+            analytics de terceiros. Caso isso mude no futuro, esta política será atualizada e,
+            se necessário, um mecanismo de consentimento prévio será implementado.
+          </p>
+          <p class="mt-2">
+            Como em qualquer site, o servidor de hospedagem pode registrar automaticamente logs
+            técnicos padrão de acesso (como endereço IP e navegador utilizado), usados
+            exclusivamente para segurança e funcionamento da infraestrutura.
+          </p>
+        </div>
+
+        <div>
+          <h2 class="text-2xl">Finalidade e base legal</h2>
+          <p class="mt-2">
+            Os logs técnicos de acesso são tratados com base no legítimo interesse do
+            controlador em garantir a segurança, a estabilidade e o correto funcionamento do
+            site (art. 7º, IX, e art. 10 da Lei Geral de Proteção de Dados — Lei nº 13.709/2018).
+          </p>
+        </div>
+
+        <div>
+          <h2 class="text-2xl">Retenção</h2>
+          <p class="mt-2">
+            Os dados de log técnico são mantidos pelo período mínimo necessário, conforme a
+            política do provedor de hospedagem, e não são compartilhados com terceiros para
+            fins comerciais.
+          </p>
+        </div>
+
+        <div>
+          <h2 class="text-2xl">Direitos do titular</h2>
+          <p class="mt-2">Conforme o art. 18 da LGPD, você tem direito a:</p>
+          <ul class="mt-2 list-disc space-y-1 pl-5">
+            <li>confirmação da existência de tratamento;</li>
+            <li>acesso aos dados;</li>
+            <li>correção de dados incompletos, inexatos ou desatualizados;</li>
+            <li>anonimização, bloqueio ou eliminação de dados desnecessários;</li>
+            <li>portabilidade dos dados;</li>
+            <li>eliminação dos dados tratados com consentimento;</li>
+            <li>informação sobre compartilhamento de dados;</li>
+            <li>revogação do consentimento, quando aplicável.</li>
+          </ul>
+          <p class="mt-2">
+            Para exercer qualquer um desses direitos, entre em contato pelo e-mail{" "}
+            {contact.email} ou pelo WhatsApp.
+          </p>
+        </div>
+
+        <div>
+          <h2 class="text-2xl">Dados de saúde</h2>
+          <p class="mt-2">
+            Informações compartilhadas durante o atendimento psicológico (presencial ou
+            online) são dados sensíveis, protegidos pelo sigilo profissional previsto no
+            Código de Ética Profissional do Psicólogo, e não são tratados por meio deste site.
+          </p>
+        </div>
+      </div>
+    </Container>
+  </section>
+</Base>

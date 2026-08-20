@@ -1,0 +1,35 @@
+---
+import Container from "./Container.astro";
+import Icon from "./Icon.astro";
+import FioMarker from "./FioMarker.astro";
+import { ctaFinal, whatsappUrl } from "../content/site";
+---
+
+<section class="relative overflow-hidden bg-sage section-padding" aria-labelledby="cta-final-heading">
+  <FioMarker icon="dove" />
+  <div
+    class="pointer-events-none absolute -left-20 bottom-[-6rem] h-72 w-72 rounded-full bg-canvas/15 blur-3xl"
+    aria-hidden="true"
+  >
+  </div>
+  <Container class="relative text-center">
+    <h2 id="cta-final-heading" class="mx-auto max-w-2xl text-coffee" data-reveal>
+      {ctaFinal.heading}
+    </h2>
+    <p class="measure mx-auto mt-5 text-graphite" data-reveal style="transition-delay:100ms">
+      {ctaFinal.sub}
+    </p>
+
+    <div class="mt-9 flex justify-center" data-reveal style="transition-delay:200ms">
+      <a
+        href={whatsappUrl()}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="btn tap-target !min-h-14 bg-coffee !px-9 !py-4 text-lg text-canvas hover:brightness-110"
+      >
+        <Icon name="whatsapp" class="h-6 w-6" />
+        {ctaFinal.ctaLabel}
+      </a>
+    </div>
+  </Container>
+</section>

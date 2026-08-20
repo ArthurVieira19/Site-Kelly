@@ -1,0 +1,57 @@
+---
+import { Picture } from "astro:assets";
+import Container from "./Container.astro";
+import Icon from "./Icon.astro";
+import heroPhoto from "../assets/images/retrato-perfil.jpg";
+import { hero, professional, whatsappUrl } from "../content/site";
+---
+
+<section id="hero" class="relative overflow-hidden pt-32 pb-20 md:pt-40 md:pb-28">
+  <div
+    class="pointer-events-none absolute -right-24 -top-24 h-[26rem] w-[26rem] rounded-full bg-sage/15 blur-3xl"
+    aria-hidden="true"
+  >
+  </div>
+
+  <Container class="relative grid items-center gap-12 md:grid-cols-[1.05fr_0.95fr] md:gap-16">
+    <div class="order-2 md:order-1">
+      <p class="eyebrow-script">{hero.eyebrow}</p>
+      <h1 class="mt-5">{hero.headline}</h1>
+      <p class="measure mt-6 text-lg text-graphite">{hero.sub}</p>
+
+      <div class="mt-9 flex flex-wrap items-center gap-4">
+        <a href={whatsappUrl()} target="_blank" rel="noopener noreferrer" class="btn btn-primary">
+          <Icon name="whatsapp" class="h-5 w-5" />
+          {hero.ctaPrimary}
+        </a>
+        <a href="#como-funciona" class="btn btn-secondary">
+          {hero.ctaSecondary}
+          <Icon name="arrow-right" class="h-4 w-4" />
+        </a>
+      </div>
+
+      <div class="mt-10 flex items-center gap-3 border-t border-warmgray pt-6">
+        <span class="h-px w-8 bg-gold" aria-hidden="true"></span>
+        <p class="caption text-graphite/80">
+          {professional.fullName} · {professional.role} · {professional.crpLabel}
+        </p>
+      </div>
+    </div>
+
+    <div class="order-1 md:order-2">
+      <div class="radius-organic-lg relative mx-auto aspect-[4/5] max-w-sm overflow-hidden md:max-w-none">
+        <Picture
+          src={heroPhoto}
+          alt={hero.imageAlt}
+          formats={["avif", "webp"]}
+          fallbackFormat="jpg"
+          widths={[400, 640, 900]}
+          sizes="(min-width: 768px) 42vw, 88vw"
+          loading="eager"
+          fetchpriority="high"
+          class="h-full w-full object-cover"
+        />
+      </div>
+    </div>
+  </Container>
+</section>

@@ -1,0 +1,55 @@
+---
+import { Picture } from "astro:assets";
+import Container from "./Container.astro";
+import Icon from "./Icon.astro";
+import aboutPhoto from "../assets/images/sobre-retrato.png";
+import { about } from "../content/site";
+
+const traitIcons = ["hand", "compass", "shield"] as const;
+---
+
+<section id="sobre" class="relative section-padding bg-taupe/25" aria-labelledby="sobre-heading">
+  <Container class="grid items-start gap-14 md:grid-cols-[0.85fr_1.15fr] md:gap-20">
+    <div class="mx-auto w-full max-w-sm md:mx-0" data-reveal>
+      <div class="radius-organic-flip relative aspect-[4/5] overflow-hidden">
+        <Picture
+          src={aboutPhoto}
+          alt={about.imageAlt}
+          formats={["avif", "webp"]}
+          fallbackFormat="jpg"
+          widths={[360, 560, 760]}
+          sizes="(min-width: 768px) 34vw, 82vw"
+          loading="lazy"
+          class="h-full w-full object-cover object-top"
+        />
+      </div>
+    </div>
+
+    <div>
+      <div data-reveal>
+        <p class="eyebrow">{about.eyebrow}</p>
+        <h2 id="sobre-heading" class="mt-4">{about.heading}</h2>
+      </div>
+
+      <div class="measure mt-6 space-y-4 text-graphite" data-reveal style="transition-delay:90ms">
+        {about.paragraphs.map((p) => <p>{p}</p>)}
+      </div>
+
+      <p class="caption mt-6 text-graphite" data-reveal style="transition-delay:150ms">
+        {about.formation.text}
+      </p>
+
+      <dl class="mt-12 grid gap-8 sm:grid-cols-3">
+        {
+          about.traits.map((trait, i) => (
+            <div data-reveal style={`transition-delay:${180 + i * 80}ms`}>
+              <Icon name={traitIcons[i]} class="h-6 w-6" />
+              <dt class="font-display mt-3 text-lg text-coffee">{trait.title}</dt>
+              <dd class="mt-1 text-sm text-graphite">{trait.text}</dd>
+            </div>
+          ))
+        }
+      </dl>
+    </div>
+  </Container>
+</section>

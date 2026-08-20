@@ -1,0 +1,47 @@
+---
+import Container from "./Container.astro";
+import Icon from "./Icon.astro";
+import { forWho } from "../content/site";
+---
+
+<section id="para-quem" class="relative section-padding bg-taupe/20" aria-labelledby="para-quem-heading">
+  <Container>
+    <div class="mx-auto max-w-2xl text-center" data-reveal>
+      <p class="eyebrow">{forWho.eyebrow}</p>
+      <h2 id="para-quem-heading" class="mt-4">{forWho.heading}</h2>
+    </div>
+
+    <div class="mt-14 grid gap-6 md:grid-cols-2">
+      <div class="radius-organic bg-canvas p-9" data-reveal>
+        <h3>{forWho.isForHeading}</h3>
+        <ul class="mt-5 space-y-4">
+          {
+            forWho.isFor.map((item) => (
+              <li class="flex items-start gap-3">
+                <Icon name="leaf" class="mt-1 h-4 w-4 shrink-0" />
+                <span class="text-graphite">{item}</span>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+
+      <div class="radius-organic-flip bg-canvas p-9" data-reveal style="transition-delay:100ms">
+        <h3>{forWho.isNotHeading}</h3>
+        <ul class="mt-5 space-y-4">
+          {
+            forWho.isNot.map((item) => (
+              <li class="flex items-start gap-3">
+                <Icon name="shield" class="mt-1 h-4 w-4 shrink-0" strokeClass="icon-line-coffee" />
+                <span class="text-graphite">{item}</span>
+              </li>
+            ))
+          }
+        </ul>
+        <p class="measure mt-6 border-t border-warmgray pt-5 text-sm text-graphite">
+          {forWho.emergencyNote}
+        </p>
+      </div>
+    </div>
+  </Container>
+</section>

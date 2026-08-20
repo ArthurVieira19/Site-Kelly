@@ -1,0 +1,29 @@
+---
+import Base from "../layouts/Base.astro";
+import Hero from "../components/Hero.astro";
+import Identificacao from "../components/Identificacao.astro";
+import Sobre from "../components/Sobre.astro";
+import ComoFunciona from "../components/ComoFunciona.astro";
+import Caminho from "../components/Caminho.astro";
+import Modalidades from "../components/Modalidades.astro";
+import ParaQuem from "../components/ParaQuem.astro";
+import InstagramSection from "../components/InstagramSection.astro";
+import Faq from "../components/Faq.astro";
+import CtaFinal from "../components/CtaFinal.astro";
+import { buildStructuredData } from "../lib/structuredData";
+
+const structuredData = buildStructuredData();
+---
+
+<Base structuredData={structuredData}>
+  <Hero />
+  <Identificacao />
+  <Sobre />
+  <ComoFunciona />
+  <Caminho />
+  <Modalidades />
+  <ParaQuem />
+  <InstagramSection />
+  <Faq />
+  <CtaFinal />
+</Base>

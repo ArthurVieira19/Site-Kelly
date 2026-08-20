@@ -1,0 +1,30 @@
+{
+  "name": "kelly-cavalcante-psicologa",
+  "type": "module",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro check && astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "astro": "^5.18.2",
+    "@fontsource-variable/cormorant-garamond": "^5.2.5",
+    "@fontsource/nunito-sans": "^5.2.5",
+    "@fontsource/parisienne": "^5.2.5",
+    "@tailwindcss/vite": "^4.3.3",
+    "tailwindcss": "^4.3.3"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.10",
+    "typescript": "^5.7.3"
+  },
+  "allowScripts": {
+    "esbuild@0.25.12": true,
+    "esbuild@0.27.7": true,
+    "sharp@0.34.5": true
+  }
+}

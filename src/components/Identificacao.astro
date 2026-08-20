@@ -1,0 +1,38 @@
+---
+import Container from "./Container.astro";
+import Icon from "./Icon.astro";
+import FioMarker from "./FioMarker.astro";
+import { identification } from "../content/site";
+---
+
+<section id="identificacao" class="relative section-padding" aria-labelledby="identificacao-heading">
+  <FioMarker icon="leaf" />
+  <Container>
+    <div class="mx-auto max-w-2xl text-center" data-reveal>
+      <p class="eyebrow">{identification.eyebrow}</p>
+      <h2 id="identificacao-heading" class="mt-4">{identification.heading}</h2>
+    </div>
+
+    <ul class="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+      {
+        identification.items.map((item, i) => (
+          <li
+            class="radius-organic bg-sand/70 p-8"
+            data-reveal
+            style={`transition-delay:${Math.min(i, 4) * 80}ms`}
+          >
+            <Icon name="heart" class="h-5 w-5 text-gold" />
+            <p class="font-display mt-4 text-xl leading-snug text-coffee">“{item}”</p>
+          </li>
+        ))
+      }
+    </ul>
+
+    <p
+      class="measure font-display mx-auto mt-16 text-center text-2xl leading-relaxed text-balance text-coffee md:text-3xl"
+      data-reveal
+    >
+      {identification.closing}
+    </p>
+  </Container>
+</section>

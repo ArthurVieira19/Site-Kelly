@@ -1,0 +1,32 @@
+---
+import Container from "./Container.astro";
+import Icon from "./Icon.astro";
+import { faq } from "../content/site";
+---
+
+<section id="duvidas" class="relative section-padding" aria-labelledby="duvidas-heading">
+  <Container class="max-w-3xl">
+    <div class="text-center" data-reveal>
+      <p class="eyebrow">{faq.eyebrow}</p>
+      <h2 id="duvidas-heading" class="mt-4">{faq.heading}</h2>
+    </div>
+
+    <div class="mt-12 divide-y divide-warmgray border-y border-warmgray">
+      {
+        faq.items.map((item, i) => (
+          <details class="group py-5" data-reveal style={`transition-delay:${Math.min(i, 5) * 60}ms`}>
+            <summary class="tap-target flex cursor-pointer list-none items-center justify-between gap-4 py-1 [&::-webkit-details-marker]:hidden">
+              <span class="font-display text-lg text-coffee md:text-xl">{item.q}</span>
+              <Icon
+                name="chevron-down"
+                class="h-5 w-5 shrink-0 transition-transform duration-300 group-open:rotate-180"
+                strokeClass="icon-line-coffee"
+              />
+            </summary>
+            <p class="measure mt-3 text-graphite">{item.a}</p>
+          </details>
+        ))
+      }
+    </div>
+  </Container>
+</section>

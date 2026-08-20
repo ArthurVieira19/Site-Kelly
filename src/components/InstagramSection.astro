@@ -1,0 +1,50 @@
+---
+import Container from "./Container.astro";
+import Icon from "./Icon.astro";
+import { instagramSection, contact } from "../content/site";
+
+const tiles = [
+  { icon: "leaf", bg: "bg-sand" },
+  { icon: "heart", bg: "bg-taupe/40" },
+  { icon: "sprout", bg: "bg-sage/40" },
+  { icon: "dove", bg: "bg-sage/40" },
+  { icon: "hand", bg: "bg-taupe/40" },
+  { icon: "compass", bg: "bg-sand" },
+] as const;
+---
+
+<section id="instagram" class="relative section-padding" aria-labelledby="instagram-heading">
+  <Container>
+    <div class="mx-auto max-w-2xl text-center" data-reveal>
+      <p class="eyebrow">{instagramSection.eyebrow}</p>
+      <h2 id="instagram-heading" class="mt-4">{instagramSection.heading}</h2>
+      <p class="measure mx-auto mt-4 text-graphite">{instagramSection.text}</p>
+    </div>
+
+    <div class="mx-auto mt-12 grid max-w-2xl grid-cols-3 gap-3 sm:gap-4">
+      {
+        tiles.map((tile, i) => (
+          <div
+            class={`flex aspect-square items-center justify-center rounded-2xl ${tile.bg}`}
+            data-reveal
+            style={`transition-delay:${Math.min(i, 5) * 50}ms`}
+          >
+            <Icon name={tile.icon} class="h-7 w-7 sm:h-8 sm:w-8" />
+          </div>
+        ))
+      }
+    </div>
+
+    <div class="mt-10 flex justify-center" data-reveal style="transition-delay:120ms">
+      <a
+        href={contact.instagram.url}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="btn btn-secondary"
+      >
+        <Icon name="instagram" class="h-5 w-5" />
+        {instagramSection.ctaLabel}
+      </a>
+    </div>
+  </Container>
+</section>

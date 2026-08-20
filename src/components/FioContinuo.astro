@@ -1,0 +1,58 @@
+---
+// Elemento-assinatura da marca: um fio contínuo de 1,5px que percorre a
+// lateral esquerda da página, conectando as seções como um fio de história.
+// Desenhado progressivamente conforme o scroll (clip-path), aparecendo
+// completo e estático quando prefers-reduced-motion está ativo ou o
+// JavaScript não carrega.
+---
+
+<div class="fio-rail" aria-hidden="true"></div>
+
+<style>
+  .fio-rail {
+    position: absolute;
+    inset-block: 0;
+    left: var(--fio-left);
+    width: 1.5px;
+    transform: translateX(-50%);
+    background: var(--color-gold);
+    clip-path: inset(0 0 calc(100% - var(--fio-progress, 100%)) 0);
+    pointer-events: none;
+    z-index: 1;
+  }
+</style>
+
+<script>
+  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const rail = document.querySelector<HTMLElement>(".fio-rail");
+  const wrap = rail?.parentElement;
+
+  if (rail && wrap && !reduceMotion) {
+    rail.style.setProperty("--fio-progress", "0%");
+
+    let ticking = false;
+
+    const update = () => {
+      const rect = wrap.getBoundingClientRect();
+      const total = rect.height;
+      const drawn = Math.min(Math.max(window.innerHeight * 0.5 - rect.top, 0), total);
+      const progress = total > 0 ? (drawn / total) * 100 : 0;
+      rail.style.setProperty("--fio-progress", `${progress}%`);
+      ticking = false;
+    };
+
+    update();
+
+    window.addEventListener(
+      "scroll",
+      () => {
+        if (!ticking) {
+          requestAnimationFrame(update);
+          ticking = true;
+        }
+      },
+      { passive: true },
+    );
+    window.addEventListener("resize", update);
+  }
+</script>

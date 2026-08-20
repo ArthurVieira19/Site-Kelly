@@ -1,0 +1,33 @@
+---
+import Container from "./Container.astro";
+import { path } from "../content/site";
+---
+
+<section id="caminho" class="relative section-padding bg-sage/35" aria-labelledby="caminho-heading">
+  <Container>
+    <div class="mx-auto max-w-2xl text-center" data-reveal>
+      <p class="eyebrow">{path.eyebrow}</p>
+      <h2 id="caminho-heading" class="mt-4">{path.heading}</h2>
+    </div>
+
+    <ol class="mt-16 grid gap-10 md:grid-cols-3 md:gap-8">
+      {
+        path.steps.map((step, i) => (
+          <li class="relative" data-reveal style={`transition-delay:${i * 100}ms`}>
+            <span class="font-display block text-6xl font-semibold text-coffee/75" aria-hidden="true">
+              {step.number}
+            </span>
+            <h3 class="mt-3">{step.title}</h3>
+            <p class="measure mt-2 text-graphite">{step.text}</p>
+            {i < path.steps.length - 1 && (
+              <span
+                class="absolute right-[-1.25rem] top-6 hidden h-px w-8 bg-gold/60 md:block"
+                aria-hidden="true"
+              />
+            )}
+          </li>
+        ))
+      }
+    </ol>
+  </Container>
+</section>

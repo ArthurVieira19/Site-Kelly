@@ -1,0 +1,86 @@
+---
+import Icon from "./Icon.astro";
+import Container from "./Container.astro";
+import {
+  professional,
+  contact,
+  emergency,
+  footer,
+  whatsappUrl,
+} from "../content/site";
+
+const year = new Date().getFullYear();
+---
+
+<footer class="bg-coffee text-canvas">
+  <Container class="section-padding !py-16">
+    <div class="grid gap-12 md:grid-cols-3">
+      <div>
+        <p class="font-display text-2xl font-semibold">{professional.fullName}</p>
+        <p class="caption mt-2 text-sand">{professional.role} · {professional.crpLabel}</p>
+        <p class="measure mt-5 text-canvas">
+          Atendimento presencial em {professional.city}/{professional.state} e online para
+          todo o Brasil.
+        </p>
+      </div>
+
+      <nav aria-label="Contato">
+        <p class="caption text-sand">Contato</p>
+        <ul class="mt-4 space-y-3">
+          <li class="flex items-start gap-3">
+            <Icon name="map-pin" class="mt-0.5 h-4 w-4 shrink-0" strokeClass="icon-line" />
+            <span class="text-canvas">{contact.address.street}, {contact.address.city}/{contact.address.state}</span>
+          </li>
+          <li class="flex items-start gap-3">
+            <Icon name="whatsapp" class="mt-0.5 h-4 w-4 shrink-0 text-gold" />
+            <a
+              href={whatsappUrl()}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="tap-target inline-flex items-center text-canvas underline decoration-canvas/30 underline-offset-4 transition-colors hover:text-gold"
+            >
+              WhatsApp
+            </a>
+          </li>
+          <li class="flex items-start gap-3">
+            <Icon name="mail" class="mt-0.5 h-4 w-4 shrink-0" strokeClass="icon-line" />
+            <span class="text-canvas">{contact.email}</span>
+          </li>
+        </ul>
+      </nav>
+
+      <nav aria-label="Links">
+        <p class="caption text-sand">Acompanhe</p>
+        <ul class="mt-4 space-y-3">
+          <li class="flex items-start gap-3">
+            <Icon name="instagram" class="mt-0.5 h-4 w-4 shrink-0" strokeClass="icon-line" />
+            <a
+              href={contact.instagram.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="tap-target inline-flex items-center text-canvas underline decoration-canvas/30 underline-offset-4 transition-colors hover:text-gold"
+            >
+              Instagram
+            </a>
+          </li>
+          <li>
+            <a
+              href="/privacidade"
+              class="tap-target inline-flex items-center text-canvas underline decoration-canvas/30 underline-offset-4 transition-colors hover:text-gold"
+            >
+              {footer.privacyLabel}
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+
+    <div class="mt-14 border-t border-canvas/15 pt-8">
+      <p class="measure text-sm leading-relaxed text-sand">{emergency.text}</p>
+      <p class="mt-4 text-xs text-sand">
+        © {year} {professional.fullName} · {professional.role} · {professional.crpLabel}
+      </p>
+      <p class="mt-1 text-xs text-sand">Desenvolvimento: {footer.developmentCredit}</p>
+    </div>
+  </Container>
+</footer>

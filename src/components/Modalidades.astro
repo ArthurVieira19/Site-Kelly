@@ -1,0 +1,62 @@
+---
+import { Picture } from "astro:assets";
+import Container from "./Container.astro";
+import Icon from "./Icon.astro";
+import FioMarker from "./FioMarker.astro";
+import consultorioPhoto from "../assets/images/consultorio.jpg";
+import onlinePhoto from "../assets/images/trabalho-online.jpg";
+import { modalities } from "../content/site";
+---
+
+<section id="atendimento" class="relative section-padding" aria-labelledby="modalidades-heading">
+  <FioMarker icon="leaf" />
+  <Container>
+    <div class="mx-auto max-w-2xl text-center" data-reveal>
+      <p class="eyebrow">{modalities.eyebrow}</p>
+      <h2 id="modalidades-heading" class="mt-4">{modalities.heading}</h2>
+    </div>
+
+    <div class="mt-14 grid gap-8 md:grid-cols-2">
+      <article class="radius-organic overflow-hidden bg-sand/60" data-reveal>
+        <div class="aspect-[16/10] overflow-hidden">
+          <Picture
+            src={consultorioPhoto}
+            alt={modalities.presencial.imageAlt}
+            formats={["avif", "webp"]}
+            fallbackFormat="jpg"
+            widths={[400, 640, 900]}
+            sizes="(min-width: 768px) 42vw, 92vw"
+            loading="lazy"
+            class="h-full w-full object-cover"
+          />
+        </div>
+        <div class="p-8">
+          <Icon name="map-pin" class="h-6 w-6" />
+          <h3 class="mt-4">{modalities.presencial.title}</h3>
+          <p class="measure mt-2 text-graphite">{modalities.presencial.text}</p>
+          <p class="caption mt-4 text-graphite">{modalities.presencial.address}</p>
+        </div>
+      </article>
+
+      <article class="radius-organic-flip overflow-hidden bg-sand/60" data-reveal style="transition-delay:100ms">
+        <div class="aspect-[16/10] overflow-hidden">
+          <Picture
+            src={onlinePhoto}
+            alt={modalities.online.imageAlt}
+            formats={["avif", "webp"]}
+            fallbackFormat="jpg"
+            widths={[400, 640, 900]}
+            sizes="(min-width: 768px) 42vw, 92vw"
+            loading="lazy"
+            class="h-full w-full object-cover"
+          />
+        </div>
+        <div class="p-8">
+          <Icon name="compass" class="h-6 w-6" />
+          <h3 class="mt-4">{modalities.online.title}</h3>
+          <p class="measure mt-2 text-graphite">{modalities.online.text}</p>
+        </div>
+      </article>
+    </div>
+  </Container>
+</section>

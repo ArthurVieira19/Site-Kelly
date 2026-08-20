@@ -1,0 +1,33 @@
+---
+import Base from "../layouts/Base.astro";
+import Container from "../components/Container.astro";
+import Icon from "../components/Icon.astro";
+import { professional, whatsappUrl } from "../content/site";
+---
+
+<Base
+  title={`Página não encontrada | ${professional.shortName}`}
+  description="A página que você procura não foi encontrada."
+  noindex
+>
+  <section class="section-padding">
+    <Container class="max-w-xl text-center">
+      <p class="eyebrow">404</p>
+      <h1 class="mt-4 text-4xl md:text-5xl">Esta página não existe mais por aqui.</h1>
+      <p class="measure mx-auto mt-4 text-graphite">
+        Talvez o endereço tenha mudado. Você pode voltar ao início ou falar comigo diretamente
+        pelo WhatsApp.
+      </p>
+
+      <div class="mt-9 flex flex-wrap justify-center gap-4">
+        <a href="/" class="btn btn-primary">
+          Voltar ao início
+        </a>
+        <a href={whatsappUrl()} target="_blank" rel="noopener noreferrer" class="btn btn-secondary">
+          <Icon name="whatsapp" class="h-5 w-5" />
+          Conversar pelo WhatsApp
+        </a>
+      </div>
+    </Container>
+  </section>
+</Base>

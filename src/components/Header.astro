@@ -1,0 +1,72 @@
+---
+import Icon from "./Icon.astro";
+import { nav, professional, whatsappUrl } from "../content/site";
+---
+
+<header
+  id="site-header"
+  data-header
+  class="fixed inset-x-0 top-0 z-40 border-b border-warmgray/60 bg-canvas/90 backdrop-blur-sm"
+>
+  <div class="mx-auto flex max-w-[84rem] items-center justify-between gap-4 px-[clamp(1.25rem,6vw,3rem)] py-3">
+    <a href="#top" class="tap-target flex flex-col justify-center leading-tight">
+      <span class="font-display text-xl font-semibold text-coffee">{professional.shortName}</span>
+      <span class="caption hidden text-graphite/80 sm:block">
+        {professional.role} · {professional.crpLabel}
+      </span>
+    </a>
+
+    <nav class="hidden items-center gap-8 md:flex" aria-label="Navegação principal">
+      {
+        nav.map((item) => (
+          <a
+            href={item.href}
+            class="tap-target flex items-center text-sm font-semibold text-coffee/85 transition-colors hover:text-terracotta"
+          >
+            {item.label}
+          </a>
+        ))
+      }
+    </nav>
+
+    <a
+      href={whatsappUrl()}
+      target="_blank"
+      rel="noopener noreferrer"
+      class="btn btn-primary tap-target !min-h-10 !py-2 !px-4 text-sm"
+    >
+      <Icon name="whatsapp" class="h-4 w-4" />
+      <span class="hidden sm:inline">Conversar</span>
+    </a>
+  </div>
+</header>
+
+<script>
+  const header = document.querySelector<HTMLElement>("[data-header]");
+  if (header) {
+    let lastY = window.scrollY;
+    let ticking = false;
+
+    const onScroll = () => {
+      const y = window.scrollY;
+      if (y > lastY && y > 140) {
+        header.style.transform = "translateY(-100%)";
+      } else {
+        header.style.transform = "translateY(0)";
+      }
+      lastY = y;
+      ticking = false;
+    };
+
+    window.addEventListener(
+      "scroll",
+      () => {
+        if (!ticking) {
+          requestAnimationFrame(onScroll);
+          ticking = true;
+        }
+      },
+      { passive: true },
+    );
+  }
+</script>

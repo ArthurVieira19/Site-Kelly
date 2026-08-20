@@ -1,0 +1,290 @@
+@import "tailwindcss";
+
+@import "@fontsource-variable/cormorant-garamond";
+@import "@fontsource/nunito-sans/400.css";
+@import "@fontsource/nunito-sans/600.css";
+@import "@fontsource/parisienne/400.css";
+
+@theme {
+  /* Paleta — manual de branding, seção 6.1. Não alterar. */
+  --color-canvas: #f7f5f2;
+  --color-sage: #a8b5a2;
+  --color-taupe: #b7a89a;
+  --color-coffee: #5c4b43;
+  --color-gold: #b99a5a;
+  --color-sand: #e9e2d8;
+  --color-warmgray: #d9d3cc;
+  --color-terracotta: #c98f73;
+  --color-graphite: #3f3f3f;
+
+  --font-display: "Cormorant Garamond Variable", "Iowan Old Style", Georgia, serif;
+  --font-body: "Nunito Sans", "Segoe UI", sans-serif;
+  --font-accent: "Parisienne", cursive;
+
+  --radius-organic: 0 6rem 0 6rem;
+  --radius-organic-lg: 0 7.5rem 0 7.5rem;
+  --radius-organic-flip: 6rem 0 6rem 0;
+
+  --ease-calm: cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+@layer base {
+  :root {
+    color-scheme: light;
+  }
+
+  * {
+    scrollbar-color: var(--color-taupe) var(--color-canvas);
+  }
+
+  html {
+    background: var(--color-canvas);
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background: var(--color-canvas);
+    color: var(--color-coffee);
+    font-family: var(--font-body);
+    font-weight: 400;
+    font-size: 1.0625rem;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    --fio-left: clamp(1.25rem, 5vw, 3rem);
+  }
+
+  section[id] {
+    scroll-margin-top: 6rem;
+  }
+
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-display);
+    color: var(--color-coffee);
+    font-weight: 600;
+    line-height: 1.15;
+    text-wrap: balance;
+  }
+
+  h1 {
+    font-size: clamp(2.5rem, 6vw, 4.5rem);
+    letter-spacing: -0.01em;
+  }
+
+  h2 {
+    font-size: clamp(2rem, 4vw, 3rem);
+    letter-spacing: -0.005em;
+  }
+
+  h3 {
+    font-size: 1.5rem;
+  }
+
+  p {
+    max-width: 65ch;
+  }
+
+  a {
+    color: inherit;
+  }
+
+  ::selection {
+    background: var(--color-sage);
+    color: #fff;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-coffee);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+
+  img {
+    color-scheme: light;
+  }
+}
+
+@layer components {
+  .eyebrow {
+    font-family: var(--font-body);
+    font-size: 0.875rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    /* terracotta (2.5:1) e gold (2.5:1) não atingem AA em texto pequeno —
+       graphite passa com folga (9.8:1) sobre canvas/sand. */
+    color: var(--color-graphite);
+  }
+
+  .eyebrow-script {
+    font-family: var(--font-accent);
+    font-size: clamp(1.75rem, 3vw, 2.25rem);
+    font-weight: 400;
+    /* gold em texto (mesmo grande) fica em 2.5:1 sobre canvas — abaixo do
+       3:1 exigido para large text. coffee mantém o clima elegante e passa. */
+    color: var(--color-coffee);
+    line-height: 1;
+  }
+
+  .caption {
+    font-size: 0.875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+  }
+
+  .measure {
+    max-width: 65ch;
+  }
+
+  .section-padding {
+    padding-block: clamp(5rem, 10vw, 9rem);
+  }
+
+  .tap-target {
+    min-height: 44px;
+    min-width: 44px;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.625rem;
+    min-height: 44px;
+    padding-inline: 1.75rem;
+    padding-block: 0.875rem;
+    border-radius: 999px;
+    font-family: var(--font-body);
+    font-weight: 600;
+    font-size: 1rem;
+    line-height: 1;
+    transition:
+      transform 0.3s var(--ease-calm),
+      background-color 0.3s var(--ease-calm),
+      border-color 0.3s var(--ease-calm),
+      color 0.3s var(--ease-calm);
+  }
+
+  .btn:hover {
+    transform: translateY(-2px);
+  }
+
+  .btn:active {
+    transform: translateY(0);
+  }
+
+  /* Sage atrás de texto normal não atinge 4.5:1 com branco (2.1:1) nem com
+     coffee (3.9:1) — só graphite passa (4.9:1). Por isso os botões usam
+     graphite, nunca branco/coffee, sobre preenchimento sage. */
+  .btn-primary {
+    background: var(--color-sage);
+    color: var(--color-graphite);
+  }
+
+  .btn-primary:hover {
+    filter: brightness(0.94);
+  }
+
+  .btn-secondary {
+    background: transparent;
+    color: var(--color-graphite);
+    border: 1.5px solid var(--color-graphite);
+  }
+
+  .btn-secondary:hover {
+    background: var(--color-graphite);
+    color: var(--color-canvas);
+  }
+
+  .icon-line {
+    stroke: var(--color-gold);
+    stroke-width: 1.5;
+    fill: none;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .icon-line-coffee {
+    stroke: var(--color-coffee);
+    stroke-width: 1.5;
+    fill: none;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .radius-organic {
+    border-radius: 0 4rem 0 4rem;
+  }
+
+  .radius-organic-flip {
+    border-radius: 4rem 0 4rem 0;
+  }
+
+  .radius-organic-lg {
+    border-radius: 0 5rem 0 5rem;
+  }
+
+  @media (min-width: 768px) {
+    .radius-organic {
+      border-radius: var(--radius-organic);
+    }
+
+    .radius-organic-flip {
+      border-radius: var(--radius-organic-flip);
+    }
+
+    .radius-organic-lg {
+      border-radius: var(--radius-organic-lg);
+    }
+  }
+
+  /* Revelação suave ao rolar — aplicada via JS (classe .js-reveal), nunca
+     por padrão, para que o conteúdo permaneça visível sem JavaScript, com
+     leitor de tela ou em impressão. Opacidade + leve translateY + blur:
+     o conteúdo "materializa", em vez de só aparecer. */
+  .js-reveal {
+    opacity: 0;
+    transform: translateY(16px);
+    filter: blur(6px);
+    transition:
+      opacity 0.65s var(--ease-calm),
+      transform 0.65s var(--ease-calm),
+      filter 0.65s var(--ease-calm);
+  }
+
+  .js-reveal.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+  }
+
+  [data-header] {
+    transition: transform 0.4s var(--ease-calm);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  * {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Rede de segurança: se por algum motivo um elemento ficar marcado como
+   .js-reveal sem nunca receber .is-visible (impressão, leitor que não
+   dispara IntersectionObserver, erro de script), o conteúdo não some. */
+@media print {
+  .js-reveal {
+    opacity: 1 !important;
+    transform: none !important;
+    filter: none !important;
+  }
+}
