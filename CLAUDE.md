@@ -196,8 +196,10 @@ Numeração 01/02/03 é justificada aqui: é uma sequência real.
 
 ### 6. Modalidades de atendimento
 Dois blocos:
-- **Presencial — Nova Odessa/SP** — endereço `[PREENCHER]`, foto do consultório, mapa estático (imagem, não iframe pesado do Google Maps).
+- **Presencial — Nova Odessa/SP** — endereço: R. João Bassora, 398 - Jardim Santa Rosa, Nova Odessa/SP, CEP 13460-076. Horário: segunda a sexta, 08:00–19:00 (sábado e domingo fechado). Foto do consultório.
 - **Online — Brasil e exterior** — vídeo chamada, mesma qualidade de acompanhamento, atende Região Metropolitana de Campinas e pacientes de todo o Brasil.
+
+> O mapa do consultório **não** fica embutido neste bloco — é sua própria seção (ver item 9, "Mapa"). Ver nota de desvio do briefing nessa seção.
 
 ### 7. Para quem é / o que este espaço não é
 Honestidade que qualifica o lead e constrói confiança.
@@ -205,9 +207,16 @@ Honestidade que qualifica o lead e constrói confiança.
 - **Não é:** atendimento de emergência, consulta psiquiátrica ou prescrição de medicamentos, coaching ou aconselhamento rápido. "Se você está em crise agora, ligue 188 (CVV) ou procure o CAPS mais próximo."
 
 ### 8. Conteúdo — Instagram
-Convite a acompanhar o conteúdo educativo. Grid estático de 3–6 posts (imagens exportadas, **não** embed oficial do Instagram — pesa e quebra). Botão "Seguir no Instagram".
+Convite a acompanhar o conteúdo educativo. Carrossel giratório 3D de fotos (imagens locais exportadas, **não** embed oficial do Instagram — pesa e quebra). Botão "Seguir no Instagram". Perfil: `@psicologakellycavalcante` (https://www.instagram.com/psicologakellycavalcante).
 
-### 9. Dúvidas frequentes (acordeão `<details>` nativo, sem JS)
+**Desvio deliberado do briefing:** a pedido da cliente, o grid estático de 3–6 posts foi substituído por um carrossel giratório 3D (`ContentCarousel.astro`), adaptado em Astro/TypeScript vanilla — sem React, sem framework de UI — a partir de uma referência React fornecida pela cliente. Por padrão renderiza uma fileira estática (sem JS, ou com `prefers-reduced-motion` até a pessoa dar play); com JavaScript e sem preferência por movimento reduzido, vira um tambor 3D com giro lento e contínuo, arrastável (ponteiro/toque) e pausável por um botão dedicado. Continua evitando o embed oficial do Instagram. As fotos usadas por enquanto são as 4 já aprovadas em outras seções do site (retrato, consultório, retrato-sala, atendimento online) — devem ser trocadas por prints reais dos posts do Instagram assim que a cliente os enviar (ver lista de pendências, seção 10).
+
+### 9. Mapa — onde fica o consultório
+Seção com embed do Google Maps (iframe) mostrando a localização exata do consultório, mais um botão "Ver no Google Maps" que abre a localização em nova aba. Fica entre Instagram e Dúvidas frequentes.
+
+**Desvio deliberado do briefing:** o item 6 (Modalidades) desta arquitetura, assim como a seção 9 "Requisitos técnicos" original, pedia mapa **estático** em imagem — não iframe do Google Maps — por peso de performance e por chamar servidores do Google sem consentimento prévio (zona cinzenta de LGPD). A cliente pediu explicitamente o embed real do Google Maps (com o pin do perfil dela já publicado no Google Business), e foi implementado como pedido. Rodar Lighthouse após publicar para confirmar que o orçamento de performance (mobile ≥ 95, seção 9) se mantém; se cair, a alternativa é trocar por uma captura estática do mapa com link para abrir no Google Maps.
+
+### 10. Dúvidas frequentes (acordeão `<details>` nativo, sem JS)
 - Como sei se preciso de terapia?
 - Nunca fiz terapia. Como é a primeira sessão?
 - A terapia online funciona igual à presencial?
@@ -217,7 +226,7 @@ Convite a acompanhar o conteúdo educativo. Grid estático de 3–6 posts (image
 - E se eu não souber o que falar?
 - Atende convênio? → `[PREENCHER]`
 
-### 10. CTA final — o convite
+### 11. CTA final — o convite
 Fundo `sage`, texto centralizado, sem urgência.
 - **H2:** "Dar o primeiro passo pode ser mais simples do que parece."
 - Sub: "Me mande uma mensagem. Podemos conversar sobre o que você está sentindo e ver se faz sentido começarmos juntas."
@@ -246,8 +255,8 @@ Deploy: Vercel ou Netlify (definir com o cliente)
 ```
 src/
   components/    # Header, Hero, Identificacao, Sobre, ComoFunciona, Caminho,
-                 # Modalidades, ParaQuem, Instagram, Faq, CtaFinal, Footer,
-                 # WhatsappFloat, FioContinuo
+                 # Modalidades, ParaQuem, InstagramSection, Mapa, Faq, CtaFinal,
+                 # Footer, WhatsappFloat, FioContinuo
   layouts/       Base.astro
   pages/         index.astro, privacidade.astro, 404.astro
   content/       site.ts   # TODO o texto e dados centralizados aqui
@@ -279,7 +288,7 @@ public/          imagens, favicon, og-image, robots.txt, sitemap
 ### SEO
 - `<title>`: "Kelly Cavalcante | Psicóloga Clínica em Nova Odessa e Online"
 - Meta description focada em identificação + localidade.
-- **JSON-LD:** `Psychologist` (subtipo de `MedicalBusiness`) com `name`, `address`, `geo`, `areaServed`, `telephone`, `sameAs` (Instagram), `medicalSpecialty`; `Person` para Kelly; `FAQPage` para a seção 9.
+- **JSON-LD:** `Psychologist` (subtipo de `MedicalBusiness`) com `name`, `address`, `geo`, `areaServed`, `telephone`, `sameAs` (Instagram), `medicalSpecialty`, `openingHoursSpecification` (segunda a sexta, 08:00–19:00); `Person` para Kelly; `FAQPage` para a seção de Dúvidas.
 - Palavras-chave naturais no texto (nunca stuffing): psicóloga em Nova Odessa, psicóloga online, terapia para mulheres, psicologia comportamental, ansiedade, autoestima, Região Metropolitana de Campinas.
 - `sitemap.xml`, `robots.txt`, canonical, Open Graph + Twitter Card com imagem 1200×630.
 - HTML semântico: `<main>`, `<section>` com `aria-labelledby`, `<nav>`, `<footer>`.
@@ -297,18 +306,22 @@ Mobile-first. Testar em 360px, 390px, 768px, 1024px, 1440px. A maior parte do tr
 
 ## 10. Dados a preencher (placeholders)
 
-Estes valores não foram fornecidos. Deixe-os como constantes claramente marcadas em `src/content/site.ts` com o valor `"[PREENCHER]"` e liste-os no README ao final:
+Valores ainda não fornecidos continuam marcados como `"[PREENCHER]"` em `src/content/site.ts` e listados no README. Valores já recebidos e preenchidos ficam registrados aqui para não serem pedidos de novo:
 
+**Preenchidos:**
+- [x] Endereço completo do consultório em Nova Odessa — R. João Bassora, 398 - Jardim Santa Rosa, Nova Odessa/SP, CEP 13460-076 (`contact.address`)
+- [x] Horário de atendimento — segunda a sexta, 08:00–19:00, sábado e domingo fechado (`contact.hours` / `contact.hoursSummary`; não fazia parte do briefing original, adicionado a pedido da cliente)
+- [x] Número do WhatsApp — `5519991016969`, convertido do telefone informado (19) 99101-6969 (`contact.whatsappNumber`). **Assumido como o número com WhatsApp ativo** — confirmar com a cliente se for diferente.
+- [x] Mensagem pré-preenchida do WhatsApp — usa a sugestão original do briefing, já estava implementada (`contact.whatsappMessage`)
+- [x] @ do Instagram e URL — `@psicologakellycavalcante` / https://www.instagram.com/psicologakellycavalcante (`contact.instagram`)
+- [x] Fotos em alta resolução (retratos + consultório) — recebidas e otimizadas em `src/assets/images/`
+
+**Ainda pendentes:**
 - [ ] Número do CRP
-- [ ] Número do WhatsApp (formato internacional, ex.: 5519XXXXXXXXX)
-- [ ] Mensagem pré-preenchida do WhatsApp (sugestão: "Olá, Kelly. Vim pelo site e gostaria de saber mais sobre os atendimentos.")
-- [ ] @ do Instagram e URL
-- [ ] Endereço completo do consultório em Nova Odessa
 - [ ] E-mail profissional
 - [ ] Domínio final
 - [ ] Formação acadêmica e especializações
 - [ ] Atende convênio? Quais?
-- [ ] Fotos em alta resolução (retratos + consultório) — as do manual de branding servem como referência de tratamento
 - [ ] Prints/imagens dos posts do Instagram para o grid
 
 ---

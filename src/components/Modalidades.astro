@@ -5,7 +5,7 @@ import Icon from "./Icon.astro";
 import FioMarker from "./FioMarker.astro";
 import consultorioPhoto from "../assets/images/consultorio.jpg";
 import onlinePhoto from "../assets/images/trabalho-online.jpg";
-import { modalities } from "../content/site";
+import { modalities, contact } from "../content/site";
 ---
 
 <section id="atendimento" class="relative section-padding" aria-labelledby="modalidades-heading">
@@ -35,6 +35,7 @@ import { modalities } from "../content/site";
           <h3 class="mt-4">{modalities.presencial.title}</h3>
           <p class="measure mt-2 text-graphite">{modalities.presencial.text}</p>
           <p class="caption mt-4 text-graphite">{modalities.presencial.address}</p>
+          <p class="caption mt-1 text-graphite">{contact.hoursSummary}</p>
         </div>
       </article>
 

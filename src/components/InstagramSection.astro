@@ -1,16 +1,8 @@
 ---
 import Container from "./Container.astro";
 import Icon from "./Icon.astro";
+import ContentCarousel from "./ContentCarousel.astro";
 import { instagramSection, contact } from "../content/site";
-
-const tiles = [
-  { icon: "leaf", bg: "bg-sand" },
-  { icon: "heart", bg: "bg-taupe/40" },
-  { icon: "sprout", bg: "bg-sage/40" },
-  { icon: "dove", bg: "bg-sage/40" },
-  { icon: "hand", bg: "bg-taupe/40" },
-  { icon: "compass", bg: "bg-sand" },
-] as const;
 ---
 
 <section id="instagram" class="relative section-padding" aria-labelledby="instagram-heading">
@@ -21,18 +13,8 @@ const tiles = [
       <p class="measure mx-auto mt-4 text-graphite">{instagramSection.text}</p>
     </div>
 
-    <div class="mx-auto mt-12 grid max-w-2xl grid-cols-3 gap-3 sm:gap-4">
-      {
-        tiles.map((tile, i) => (
-          <div
-            class={`flex aspect-square items-center justify-center rounded-2xl ${tile.bg}`}
-            data-reveal
-            style={`transition-delay:${Math.min(i, 5) * 50}ms`}
-          >
-            <Icon name={tile.icon} class="h-7 w-7 sm:h-8 sm:w-8" />
-          </div>
-        ))
-      }
+    <div class="mt-14" data-reveal style="transition-delay:60ms">
+      <ContentCarousel />
     </div>
 
     <div class="mt-10 flex justify-center" data-reveal style="transition-delay:120ms">

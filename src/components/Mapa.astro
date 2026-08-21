@@ -1,0 +1,45 @@
+---
+import Container from "./Container.astro";
+import Icon from "./Icon.astro";
+import { mapSection } from "../content/site";
+---
+
+<section id="mapa" class="relative section-padding" aria-labelledby="mapa-heading">
+  <Container>
+    <div class="mx-auto max-w-2xl text-center" data-reveal>
+      <p class="eyebrow">{mapSection.eyebrow}</p>
+      <h2 id="mapa-heading" class="mt-4">{mapSection.heading}</h2>
+      <p class="measure mx-auto mt-4 text-graphite">{mapSection.text}</p>
+    </div>
+
+    <div
+      class="radius-organic mx-auto mt-12 max-w-3xl overflow-hidden bg-sand/60"
+      data-reveal
+      style="transition-delay:80ms"
+    >
+      <div class="aspect-[4/3] sm:aspect-[16/9]">
+        <iframe
+          src={mapSection.embedUrl}
+          title={mapSection.embedTitle}
+          class="h-full w-full"
+          style="border:0;"
+          loading="lazy"
+          referrerpolicy="strict-origin-when-cross-origin"
+          allowfullscreen
+        ></iframe>
+      </div>
+    </div>
+
+    <div class="mt-6 flex justify-center" data-reveal style="transition-delay:140ms">
+      <a
+        href={mapSection.externalUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="btn btn-secondary"
+      >
+        <Icon name="map-pin" class="h-5 w-5" />
+        {mapSection.ctaLabel}
+      </a>
+    </div>
+  </Container>
+</section>

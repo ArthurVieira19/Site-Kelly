@@ -1,0 +1,267 @@
+---
+// Carrossel giratório 3D para a seção "Conteúdo" — adaptado de um componente
+// React de referência (Originkit) para Astro + TypeScript vanilla, sem
+// framework de UI, seguindo a regra de JavaScript mínimo do projeto.
+//
+// Fotos circulares (máscara orgânica, seção 6.4) reaproveitando os retratos
+// já usados em outras seções, até que os prints reais dos posts do
+// Instagram sejam entregues pela cliente.
+//
+// Resiliência: por padrão o componente renderiza uma fileira estática (sem
+// transformações 3D). O tambor giratório só é ativado via JS (classe
+// .is-3d), então sem JavaScript — ou com prefers-reduced-motion, até a
+// pessoa optar por dar play — as quatro fotos continuam todas visíveis,
+// paradas, em vez de reduzidas a uma única foto de frente com as outras
+// escondidas de lado.
+import { Picture } from "astro:assets";
+import Icon from "./Icon.astro";
+import retratoPhoto from "../assets/images/retrato-perfil.jpg";
+import consultorioPhoto from "../assets/images/consultorio.jpg";
+import salaPhoto from "../assets/images/retrato-sala.png";
+import onlinePhoto from "../assets/images/trabalho-online.jpg";
+import { about, modalities, hero } from "../content/site";
+
+const slides = [
+  { src: retratoPhoto, alt: about.imageAlt },
+  { src: consultorioPhoto, alt: modalities.presencial.imageAlt },
+  { src: salaPhoto, alt: hero.imageAlt },
+  { src: onlinePhoto, alt: modalities.online.imageAlt },
+] as const;
+
+const angleStep = 360 / slides.length;
+// Raio mínimo para círculos vizinhos não se sobreporem em um anel de N
+// pontos é 1 / (2·sen(π/N)); a folga de 22% abre um respiro visível entre
+// as fotos, consistente com o "bastante respiro" pedido no manual.
+const ringFactor = (1 / (2 * Math.sin(Math.PI / slides.length))) * 1.22;
+---
+
+<div class="carousel" data-carousel>
+  <div class="carousel-scene" data-carousel-scene aria-hidden="true">
+    <div class="carousel-tilt">
+      <div class="carousel-ring" data-carousel-ring>
+        {
+          slides.map((slide, i) => (
+            <div class="carousel-face" style={`--cc-angle:${i * angleStep}deg`}>
+              <Picture
+                src={slide.src}
+                alt={slide.alt}
+                formats={["avif", "webp"]}
+                fallbackFormat="jpg"
+                widths={[200, 320, 440]}
+                sizes="(min-width: 640px) 13rem, 8rem"
+                loading="lazy"
+                class="h-full w-full object-cover"
+              />
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </div>
+
+  <div class="mt-8 flex justify-center">
+    <button
+      type="button"
+      class="carousel-toggle tap-target"
+      data-carousel-toggle
+      aria-pressed="false"
+      aria-label="Pausar a rotação das fotos"
+    >
+      <span data-icon="pause"><Icon name="pause" class="h-4 w-4" /></span>
+      <span data-icon="play" class="hidden"><Icon name="play" class="h-4 w-4" /></span>
+    </button>
+  </div>
+</div>
+
+<style define:vars={{ ringFactor }}>
+  .carousel-scene {
+    display: flex;
+    justify-content: center;
+    --cc-size: clamp(8rem, 22vw, 12.5rem);
+    --cc-radius: calc(var(--cc-size) * var(--ringFactor));
+    perspective: 1400px;
+  }
+
+  .carousel-scene.js-active {
+    cursor: grab;
+    touch-action: none;
+  }
+
+  .carousel-scene.js-active:active {
+    cursor: grabbing;
+  }
+
+  .carousel-ring {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: clamp(0.75rem, 3vw, 1.5rem);
+  }
+
+  .carousel-face {
+    width: var(--cc-size);
+    height: var(--cc-size);
+    flex: none;
+    border-radius: 50%;
+    overflow: hidden;
+  }
+
+  .is-3d .carousel-tilt {
+    transform: rotateX(-6deg);
+    transform-style: preserve-3d;
+  }
+
+  .is-3d .carousel-ring {
+    position: relative;
+    width: var(--cc-size);
+    height: var(--cc-size);
+    transform: translateZ(calc(var(--cc-radius) * -1)) rotateY(var(--cc-rotation, 0deg));
+    transform-style: preserve-3d;
+  }
+
+  .is-3d .carousel-face {
+    position: absolute;
+    top: 0;
+    left: 0;
+    backface-visibility: hidden;
+    transform: rotateY(var(--cc-angle)) translateZ(var(--cc-radius));
+  }
+
+  .carousel-toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    border-radius: 999px;
+    border: 1.5px solid var(--color-warmgray);
+    background: var(--color-canvas);
+    color: var(--color-coffee);
+    transition:
+      border-color 0.3s var(--ease-calm),
+      background-color 0.3s var(--ease-calm);
+  }
+
+  .carousel-toggle:hover {
+    border-color: var(--color-gold);
+  }
+</style>
+
+<script>
+  const root = document.querySelector<HTMLElement>("[data-carousel]");
+  const scene = root?.querySelector<HTMLElement>("[data-carousel-scene]");
+  const ring = root?.querySelector<HTMLElement>("[data-carousel-ring]");
+  const toggle = root?.querySelector<HTMLButtonElement>("[data-carousel-toggle]");
+  const iconPause = toggle?.querySelector<HTMLElement>('[data-icon="pause"]');
+  const iconPlay = toggle?.querySelector<HTMLElement>('[data-icon="play"]');
+
+  if (root && scene && ring && toggle && iconPause && iconPlay) {
+    const DEG_PER_SEC = 6.5;
+    const DRAG_SENSITIVITY = 0.35;
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    let rotation = 0;
+    let velocity = 0;
+    let lastTime = 0;
+    let rafId = 0;
+    let dragging = false;
+    let dragX = 0;
+    let inView = false;
+    let userPaused = reduceMotion;
+
+    scene.classList.add("js-active");
+
+    const applyRotation = () => ring.style.setProperty("--cc-rotation", `${rotation}deg`);
+
+    const setToggleUI = () => {
+      toggle.setAttribute("aria-pressed", String(!userPaused));
+      toggle.setAttribute(
+        "aria-label",
+        userPaused ? "Retomar a rotação das fotos" : "Pausar a rotação das fotos",
+      );
+      iconPause.classList.toggle("hidden", userPaused);
+      iconPlay.classList.toggle("hidden", !userPaused);
+    };
+
+    // Roda só enquanto há algo a animar (arrasto, inércia ou giro ativo) —
+    // a própria função encerra o loop quando não há mais nada a atualizar,
+    // em vez de manter o requestAnimationFrame girando à toa em segundo plano.
+    const tick = (now: number) => {
+      const dt = lastTime ? Math.min((now - lastTime) / 1000, 0.1) : 0;
+      lastTime = now;
+      let active = false;
+
+      if (dragging) {
+        active = true;
+      } else if (Math.abs(velocity) > 0.02) {
+        rotation += velocity * dt;
+        velocity *= 0.94;
+        active = true;
+      } else if (!userPaused && inView) {
+        rotation += DEG_PER_SEC * dt;
+        active = true;
+      }
+
+      applyRotation();
+      rafId = active ? requestAnimationFrame(tick) : 0;
+    };
+
+    const ensureLoop = () => {
+      if (!rafId) {
+        lastTime = 0;
+        rafId = requestAnimationFrame(tick);
+      }
+    };
+
+    new IntersectionObserver(
+      (entries) => {
+        inView = entries[0]?.isIntersecting ?? false;
+        if (inView && !userPaused) ensureLoop();
+      },
+      { threshold: 0.1 },
+    ).observe(scene);
+
+    toggle.addEventListener("click", () => {
+      userPaused = !userPaused;
+      setToggleUI();
+      if (!userPaused) {
+        root.classList.add("is-3d");
+        ensureLoop();
+      }
+    });
+
+    scene.addEventListener("pointerdown", (e) => {
+      root.classList.add("is-3d");
+      dragging = true;
+      dragX = e.clientX;
+      velocity = 0;
+      scene.setPointerCapture(e.pointerId);
+      ensureLoop();
+    });
+
+    scene.addEventListener("pointermove", (e) => {
+      if (!dragging) return;
+      const dx = e.clientX - dragX;
+      dragX = e.clientX;
+      rotation += dx * DRAG_SENSITIVITY;
+      velocity = dx * DRAG_SENSITIVITY * 60;
+    });
+
+    const endDrag = (e: PointerEvent) => {
+      if (!dragging) return;
+      dragging = false;
+      scene.releasePointerCapture(e.pointerId);
+    };
+
+    scene.addEventListener("pointerup", endDrag);
+    scene.addEventListener("pointercancel", endDrag);
+
+    setToggleUI();
+    applyRotation();
+
+    if (!reduceMotion) {
+      root.classList.add("is-3d");
+      ensureLoop();
+    }
+  }
+</script>

@@ -26,27 +26,39 @@ export const professional = {
 } as const;
 
 export const contact = {
-  whatsappNumber: PLACEHOLDER, // formato internacional, ex.: 5519XXXXXXXXX
+  whatsappNumber: "5519991016969", // formato internacional — a partir do telefone (19) 99101-6969
+  whatsappDisplay: "(19) 99101-6969",
   whatsappMessage:
     "Olá, Kelly. Vim pelo site e gostaria de saber mais sobre os atendimentos.",
   email: PLACEHOLDER, // ex.: contato@kellycavalcante.com.br
   instagram: {
-    handle: PLACEHOLDER, // ex.: @kellycavalcante.psi
-    url: PLACEHOLDER, // ex.: https://instagram.com/kellycavalcante.psi
+    handle: "@psicologakellycavalcante",
+    url: "https://www.instagram.com/psicologakellycavalcante",
   },
   address: {
-    street: PLACEHOLDER, // endereço completo do consultório
+    street: "R. João Bassora, 398 - Jardim Santa Rosa",
     city: "Nova Odessa",
     state: "SP",
-    zip: PLACEHOLDER,
-    // Coordenadas aproximadas do centro de Nova Odessa/SP — ajustar após definição do endereço exato.
+    zip: "13460-076",
+    // Coordenadas aproximadas do centro de Nova Odessa/SP — ajustar para a geolocalização exata do endereço acima.
     lat: -22.7695,
     lng: -47.2958,
   },
+  hours: [
+    { day: "Segunda-feira", schedule: "08:00–19:00" },
+    { day: "Terça-feira", schedule: "08:00–19:00" },
+    { day: "Quarta-feira", schedule: "08:00–19:00" },
+    { day: "Quinta-feira", schedule: "08:00–19:00" },
+    { day: "Sexta-feira", schedule: "08:00–19:00" },
+    { day: "Sábado", schedule: "Fechado" },
+    { day: "Domingo", schedule: "Fechado" },
+  ],
+  hoursSummary: "Segunda a sexta-feira, das 8h às 19h",
 } as const;
 
 export function whatsappUrl(message: string = contact.whatsappMessage): string {
-  const number = contact.whatsappNumber === PLACEHOLDER ? "" : contact.whatsappNumber;
+  const raw: string = contact.whatsappNumber;
+  const number = raw === PLACEHOLDER ? "" : raw;
   return `https://wa.me/${number}?text=${encodeURIComponent(message)}`;
 }
 
@@ -178,6 +190,18 @@ export const modalities = {
     text: `Atendimento por videochamada, com a mesma qualidade de acompanhamento do presencial. Atendo a ${professional.region} e pacientes de todo o Brasil e do exterior.`,
     imageAlt: "Atendimento psicológico online por videochamada",
   },
+} as const;
+
+export const mapSection = {
+  eyebrow: "Como chegar",
+  heading: "Onde fica o consultório",
+  text: `${contact.address.street}, ${contact.address.city}/${contact.address.state}. ${contact.hoursSummary}.`,
+  embedUrl:
+    "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3678.4093345748092!2d-47.291834699999995!3d-22.787291600000003!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94c897c77c9222b3%3A0xbe86f2778e94bcb6!2sKelly%20Cavalcante%20%7C%20Psic%C3%B3loga%20Cl%C3%ADnica!5e0!3m2!1spt-BR!2sbr!4v1787266163658!5m2!1spt-BR!2sbr",
+  embedTitle: "Mapa com a localização do consultório de Kelly Cavalcante em Nova Odessa/SP",
+  externalUrl:
+    "https://www.google.com/maps/search/?api=1&query=Kelly+Cavalcante+Psic%C3%B3loga+Cl%C3%ADnica+Nova+Odessa",
+  ctaLabel: "Ver no Google Maps",
 } as const;
 
 export const forWho = {

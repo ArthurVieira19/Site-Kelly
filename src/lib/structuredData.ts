@@ -1,6 +1,9 @@
 import { site, professional, contact, faq, whatsappUrl } from "../content/site";
 
 export function buildStructuredData() {
+  const instagramUrl: string = contact.instagram.url;
+  const sameAs = [instagramUrl].filter((url) => url && url !== "[PREENCHER]");
+
   const psychologist = {
     "@context": "https://schema.org",
     "@type": "Psychologist",
@@ -29,7 +32,19 @@ export function buildStructuredData() {
       { "@type": "Country", name: "Brasil" },
     ],
     medicalSpecialty: "Psychiatric",
-    sameAs: [contact.instagram.url].filter((url) => url && url !== "[PREENCHER]"),
+    openingHoursSpecification: {
+      "@type": "OpeningHoursSpecification",
+      dayOfWeek: [
+        "Monday",
+        "Tuesday",
+        "Wednesday",
+        "Thursday",
+        "Friday",
+      ],
+      opens: "08:00",
+      closes: "19:00",
+    },
+    sameAs,
   };
 
   const person = {
@@ -38,7 +53,7 @@ export function buildStructuredData() {
     name: professional.fullName,
     jobTitle: professional.role,
     url: site.url,
-    sameAs: [contact.instagram.url].filter((url) => url && url !== "[PREENCHER]"),
+    sameAs,
   };
 
   const faqPage = {
