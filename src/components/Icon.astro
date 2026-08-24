@@ -19,7 +19,8 @@ interface Props {
     | "clock"
     | "sprout"
     | "pause"
-    | "play";
+    | "play"
+    | "chevron-right";
   class?: string;
   strokeClass?: "icon-line" | "icon-line-coffee";
 }
@@ -161,6 +162,13 @@ const { name, class: className = "", strokeClass = "icon-line" } = Astro.props;
   name === "play" && (
     <svg viewBox="0 0 24 24" class={className} class:list={[strokeClass]} aria-hidden="true">
       <path d="M8 5.5v13l11-6.5-11-6.5Z" />
+    </svg>
+  )
+}
+{
+  name === "chevron-right" && (
+    <svg viewBox="0 0 24 24" class={className} class:list={[strokeClass]} aria-hidden="true">
+      <path d="M9 6l6 6-6 6" />
     </svg>
   )
 }

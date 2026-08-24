@@ -1,18 +1,20 @@
 ---
-// Carrossel giratório 3D para a seção "Conteúdo" — adaptado de um componente
-// React de referência (Originkit) para Astro + TypeScript vanilla, sem
-// framework de UI, seguindo a regra de JavaScript mínimo do projeto.
+// Carrossel de fotos da seção "Conteúdo" — pilha de retratos levemente
+// espalhados (como fotografias reais deixadas sobre uma mesa), não um
+// carrossel giratório em 3D. Cada avanço desliza a foto da frente para
+// trás da pilha com uma transição suave em 2D (translate/rotate/scale via
+// CSS puro), sem perspectiva nem matriz 3D.
 //
-// Fotos circulares (máscara orgânica, seção 6.4) reaproveitando os retratos
-// já usados em outras seções, até que os prints reais dos posts do
-// Instagram sejam entregues pela cliente.
+// Sem imagens finais do Instagram ainda (pendência da seção 10 do
+// CLAUDE.md) — usa 5 posições reaproveitando as 4 fotos já aprovadas no
+// site (uma delas repetida) só como placeholder visual.
 //
-// Resiliência: por padrão o componente renderiza uma fileira estática (sem
-// transformações 3D). O tambor giratório só é ativado via JS (classe
-// .is-3d), então sem JavaScript — ou com prefers-reduced-motion, até a
-// pessoa optar por dar play — as quatro fotos continuam todas visíveis,
-// paradas, em vez de reduzidas a uma única foto de frente com as outras
-// escondidas de lado.
+// Resiliência: a posição de cada foto na pilha (--stack-offset) já nasce
+// definida no HTML, então mesmo sem JavaScript a pilha aparece com a
+// primeira foto na frente e as demais espiando atrás, paradas — nunca
+// quebrada. O JavaScript só acrescenta a troca de foto (clique, setas) e
+// o avanço automático lento, pausável e desligado por padrão quando
+// prefers-reduced-motion está ativo.
 import { Picture } from "astro:assets";
 import Icon from "./Icon.astro";
 import retratoPhoto from "../assets/images/retrato-perfil.jpg";
@@ -22,112 +24,111 @@ import onlinePhoto from "../assets/images/trabalho-online.jpg";
 import { about, modalities, hero } from "../content/site";
 
 const slides = [
-  { src: retratoPhoto, alt: about.imageAlt },
-  { src: consultorioPhoto, alt: modalities.presencial.imageAlt },
-  { src: salaPhoto, alt: hero.imageAlt },
-  { src: onlinePhoto, alt: modalities.online.imageAlt },
+  { src: retratoPhoto, alt: about.imageAlt, rotate: -2 },
+  { src: consultorioPhoto, alt: modalities.presencial.imageAlt, rotate: 1.5 },
+  { src: salaPhoto, alt: hero.imageAlt, rotate: -2.5 },
+  { src: onlinePhoto, alt: modalities.online.imageAlt, rotate: 2 },
+  { src: consultorioPhoto, alt: modalities.presencial.imageAlt, rotate: -1 },
 ] as const;
 
-const angleStep = 360 / slides.length;
-// Raio mínimo para círculos vizinhos não se sobreporem em um anel de N
-// pontos é 1 / (2·sen(π/N)); a folga de 22% abre um respiro visível entre
-// as fotos, consistente com o "bastante respiro" pedido no manual.
-const ringFactor = (1 / (2 * Math.sin(Math.PI / slides.length))) * 1.22;
+const total = String(slides.length).padStart(2, "0");
 ---
 
-<div class="carousel" data-carousel>
-  <div class="carousel-scene" data-carousel-scene aria-hidden="true">
-    <div class="carousel-tilt">
-      <div class="carousel-ring" data-carousel-ring>
-        {
-          slides.map((slide, i) => (
-            <div class="carousel-face" style={`--cc-angle:${i * angleStep}deg`}>
-              <Picture
-                src={slide.src}
-                alt={slide.alt}
-                formats={["avif", "webp"]}
-                fallbackFormat="jpg"
-                widths={[200, 320, 440]}
-                sizes="(min-width: 640px) 13rem, 8rem"
-                loading="lazy"
-                class="h-full w-full object-cover"
-              />
-            </div>
-          ))
-        }
-      </div>
+<div class="photo-stack mx-auto max-w-xs" data-carousel>
+  <div class="stack-frame">
+    <div
+      class="pointer-events-none absolute inset-0 -z-10 scale-125 rounded-full bg-sage/25 blur-3xl"
+      aria-hidden="true"
+    >
+    </div>
+    <div class="stack" data-stack aria-hidden="true">
+      {
+        slides.map((slide, i) => (
+          <div
+            class:list={["stack-card", i % 2 === 0 ? "radius-organic" : "radius-organic-flip"]}
+            data-card
+            style={`--stack-offset:${i};--base-rotate:${slide.rotate}deg`}
+          >
+            <Picture
+              src={slide.src}
+              alt={slide.alt}
+              formats={["avif", "webp"]}
+              fallbackFormat="jpg"
+              widths={[280, 400, 560]}
+              sizes="(min-width: 640px) 18rem, 70vw"
+              loading="lazy"
+              class="h-full w-full object-cover"
+            />
+          </div>
+        ))
+      }
     </div>
   </div>
 
-  <div class="mt-8 flex justify-center">
+  <div class="mt-7 flex items-center justify-center gap-3">
+    <button type="button" class="stack-btn" data-prev aria-label="Foto anterior">
+      <Icon name="chevron-right" class="h-4 w-4 rotate-180" />
+    </button>
+    <p class="caption min-w-[4.5rem] text-center text-graphite" data-counter>01 — {total}</p>
+    <button type="button" class="stack-btn" data-next aria-label="Próxima foto">
+      <Icon name="chevron-right" class="h-4 w-4" />
+    </button>
+    <span class="mx-1 h-px w-5 bg-warmgray" aria-hidden="true"></span>
     <button
       type="button"
-      class="carousel-toggle tap-target"
-      data-carousel-toggle
+      class="stack-btn"
+      data-toggle
       aria-pressed="false"
-      aria-label="Pausar a rotação das fotos"
+      aria-label="Retomar a troca automática de fotos"
     >
-      <span data-icon="pause"><Icon name="pause" class="h-4 w-4" /></span>
-      <span data-icon="play" class="hidden"><Icon name="play" class="h-4 w-4" /></span>
+      <span data-icon="pause" class="hidden"><Icon name="pause" class="h-4 w-4" /></span>
+      <span data-icon="play"><Icon name="play" class="h-4 w-4" /></span>
     </button>
   </div>
 </div>
 
-<style define:vars={{ ringFactor }}>
-  .carousel-scene {
-    display: flex;
-    justify-content: center;
-    --cc-size: clamp(8rem, 22vw, 12.5rem);
-    --cc-radius: calc(var(--cc-size) * var(--ringFactor));
-    perspective: 1400px;
-  }
-
-  .carousel-scene.js-active {
-    cursor: grab;
-    touch-action: none;
-  }
-
-  .carousel-scene.js-active:active {
-    cursor: grabbing;
-  }
-
-  .carousel-ring {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: clamp(0.75rem, 3vw, 1.5rem);
-  }
-
-  .carousel-face {
-    width: var(--cc-size);
-    height: var(--cc-size);
-    flex: none;
-    border-radius: 50%;
-    overflow: hidden;
-  }
-
-  .is-3d .carousel-tilt {
-    transform: rotateX(-6deg);
-    transform-style: preserve-3d;
-  }
-
-  .is-3d .carousel-ring {
+<style>
+  .stack-frame {
     position: relative;
-    width: var(--cc-size);
-    height: var(--cc-size);
-    transform: translateZ(calc(var(--cc-radius) * -1)) rotateY(var(--cc-rotation, 0deg));
-    transform-style: preserve-3d;
+    isolation: isolate;
+    aspect-ratio: 4 / 5;
+    width: 100%;
   }
 
-  .is-3d .carousel-face {
+  .stack {
+    position: relative;
+    width: 100%;
+    height: 100%;
+  }
+
+  .stack-card {
     position: absolute;
-    top: 0;
-    left: 0;
-    backface-visibility: hidden;
-    transform: rotateY(var(--cc-angle)) translateZ(var(--cc-radius));
+    inset: 0;
+    overflow: hidden;
+    cursor: pointer;
+    transform-origin: 50% 88%;
+    /* Da 3ª foto pra trás a posição some (fica coberta), então ela é
+       congelada na posição da 2ª — assim a pilha nunca continua se
+       espalhando pra fora da moldura em telas estreitas; só a opacidade
+       (com --stack-offset "cru") segue caindo até sumir de vez. */
+    --stack-pos: min(var(--stack-offset), 2);
+    translate: calc(var(--stack-pos) * 0.65rem) calc(var(--stack-pos) * 0.5rem);
+    rotate: calc(var(--base-rotate) + var(--stack-pos) * 1.8deg);
+    scale: calc(1 - var(--stack-pos) * 0.05);
+    opacity: calc(1 - var(--stack-offset) * 0.32);
+    z-index: calc(20 - var(--stack-offset));
+    transition:
+      translate 0.7s var(--ease-calm),
+      rotate 0.7s var(--ease-calm),
+      scale 0.7s var(--ease-calm),
+      opacity 0.5s var(--ease-calm);
   }
 
-  .carousel-toggle {
+  .caption {
+    font-variant-numeric: tabular-nums;
+  }
+
+  .stack-btn {
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -142,126 +143,100 @@ const ringFactor = (1 / (2 * Math.sin(Math.PI / slides.length))) * 1.22;
       background-color 0.3s var(--ease-calm);
   }
 
-  .carousel-toggle:hover {
+  .stack-btn:hover {
     border-color: var(--color-gold);
   }
 </style>
 
 <script>
   const root = document.querySelector<HTMLElement>("[data-carousel]");
-  const scene = root?.querySelector<HTMLElement>("[data-carousel-scene]");
-  const ring = root?.querySelector<HTMLElement>("[data-carousel-ring]");
-  const toggle = root?.querySelector<HTMLButtonElement>("[data-carousel-toggle]");
+  const stack = root?.querySelector<HTMLElement>("[data-stack]");
+  const cards = stack ? Array.from(stack.querySelectorAll<HTMLElement>("[data-card]")) : [];
+  const prevBtn = root?.querySelector<HTMLButtonElement>("[data-prev]");
+  const nextBtn = root?.querySelector<HTMLButtonElement>("[data-next]");
+  const toggle = root?.querySelector<HTMLButtonElement>("[data-toggle]");
+  const counter = root?.querySelector<HTMLElement>("[data-counter]");
   const iconPause = toggle?.querySelector<HTMLElement>('[data-icon="pause"]');
   const iconPlay = toggle?.querySelector<HTMLElement>('[data-icon="play"]');
 
-  if (root && scene && ring && toggle && iconPause && iconPlay) {
-    const DEG_PER_SEC = 6.5;
-    const DRAG_SENSITIVITY = 0.35;
+  if (root && stack && prevBtn && nextBtn && toggle && counter && iconPause && iconPlay && cards.length) {
+    const COUNT = cards.length;
+    const AUTOPLAY_MS = 5200;
     const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-    let rotation = 0;
-    let velocity = 0;
-    let lastTime = 0;
-    let rafId = 0;
-    let dragging = false;
-    let dragX = 0;
-    let inView = false;
+    let current = 0;
     let userPaused = reduceMotion;
+    let inView = false;
+    let timer = 0;
 
-    scene.classList.add("js-active");
-
-    const applyRotation = () => ring.style.setProperty("--cc-rotation", `${rotation}deg`);
+    const layout = () => {
+      cards.forEach((card, i) => {
+        const offset = (i - current + COUNT) % COUNT;
+        card.style.setProperty("--stack-offset", String(offset));
+        card.style.pointerEvents = offset <= 2 ? "auto" : "none";
+      });
+      counter.textContent = `${String(current + 1).padStart(2, "0")} — ${String(COUNT).padStart(2, "0")}`;
+    };
 
     const setToggleUI = () => {
       toggle.setAttribute("aria-pressed", String(!userPaused));
       toggle.setAttribute(
         "aria-label",
-        userPaused ? "Retomar a rotação das fotos" : "Pausar a rotação das fotos",
+        userPaused ? "Retomar a troca automática de fotos" : "Pausar a troca automática de fotos",
       );
       iconPause.classList.toggle("hidden", userPaused);
       iconPlay.classList.toggle("hidden", !userPaused);
     };
 
-    // Roda só enquanto há algo a animar (arrasto, inércia ou giro ativo) —
-    // a própria função encerra o loop quando não há mais nada a atualizar,
-    // em vez de manter o requestAnimationFrame girando à toa em segundo plano.
-    const tick = (now: number) => {
-      const dt = lastTime ? Math.min((now - lastTime) / 1000, 0.1) : 0;
-      lastTime = now;
-      let active = false;
-
-      if (dragging) {
-        active = true;
-      } else if (Math.abs(velocity) > 0.02) {
-        rotation += velocity * dt;
-        velocity *= 0.94;
-        active = true;
-      } else if (!userPaused && inView) {
-        rotation += DEG_PER_SEC * dt;
-        active = true;
-      }
-
-      applyRotation();
-      rafId = active ? requestAnimationFrame(tick) : 0;
+    // Reagenda a si mesma a cada troca — evita o desvio de um setInterval
+    // fixo e para de vez enquanto pausada ou fora da tela.
+    const scheduleNext = () => {
+      window.clearTimeout(timer);
+      if (userPaused || !inView) return;
+      timer = window.setTimeout(() => {
+        goTo(current + 1);
+        scheduleNext();
+      }, AUTOPLAY_MS);
     };
 
-    const ensureLoop = () => {
-      if (!rafId) {
-        lastTime = 0;
-        rafId = requestAnimationFrame(tick);
-      }
-    };
+    function goTo(index: number) {
+      current = ((index % COUNT) + COUNT) % COUNT;
+      layout();
+    }
 
     new IntersectionObserver(
       (entries) => {
         inView = entries[0]?.isIntersecting ?? false;
-        if (inView && !userPaused) ensureLoop();
+        if (inView) scheduleNext();
+        else window.clearTimeout(timer);
       },
-      { threshold: 0.1 },
-    ).observe(scene);
+      { threshold: 0.2 },
+    ).observe(stack);
+
+    prevBtn.addEventListener("click", () => {
+      goTo(current - 1);
+      scheduleNext();
+    });
+
+    nextBtn.addEventListener("click", () => {
+      goTo(current + 1);
+      scheduleNext();
+    });
+
+    cards.forEach((card, i) => {
+      card.addEventListener("click", () => {
+        goTo(i === current ? current + 1 : i);
+        scheduleNext();
+      });
+    });
 
     toggle.addEventListener("click", () => {
       userPaused = !userPaused;
       setToggleUI();
-      if (!userPaused) {
-        root.classList.add("is-3d");
-        ensureLoop();
-      }
+      scheduleNext();
     });
-
-    scene.addEventListener("pointerdown", (e) => {
-      root.classList.add("is-3d");
-      dragging = true;
-      dragX = e.clientX;
-      velocity = 0;
-      scene.setPointerCapture(e.pointerId);
-      ensureLoop();
-    });
-
-    scene.addEventListener("pointermove", (e) => {
-      if (!dragging) return;
-      const dx = e.clientX - dragX;
-      dragX = e.clientX;
-      rotation += dx * DRAG_SENSITIVITY;
-      velocity = dx * DRAG_SENSITIVITY * 60;
-    });
-
-    const endDrag = (e: PointerEvent) => {
-      if (!dragging) return;
-      dragging = false;
-      scene.releasePointerCapture(e.pointerId);
-    };
-
-    scene.addEventListener("pointerup", endDrag);
-    scene.addEventListener("pointercancel", endDrag);
 
     setToggleUI();
-    applyRotation();
-
-    if (!reduceMotion) {
-      root.classList.add("is-3d");
-      ensureLoop();
-    }
+    layout();
   }
 </script>

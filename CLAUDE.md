@@ -41,7 +41,7 @@ A profissional é psicóloga registrada no CRP. A Resolução CFP nº 11/2018 e 
 - **Nome:** Kelly Cristina Cavalcante
 - **Profissão:** Psicóloga clínica
 - **Abordagem:** Psicologia comportamental (análise do comportamento)
-- **CRP:** `[PREENCHER — CRP 06/XXXXX]`
+- **CRP:** 06/186529 (nome de registro: Kelly Cristina do Nascimento Cavalcante)
 - **Atendimento:** presencial em Nova Odessa/SP e online para todo o Brasil e exterior
 - **Público:** mulheres adultas
 
@@ -207,9 +207,9 @@ Honestidade que qualifica o lead e constrói confiança.
 - **Não é:** atendimento de emergência, consulta psiquiátrica ou prescrição de medicamentos, coaching ou aconselhamento rápido. "Se você está em crise agora, ligue 188 (CVV) ou procure o CAPS mais próximo."
 
 ### 8. Conteúdo — Instagram
-Convite a acompanhar o conteúdo educativo. Carrossel giratório 3D de fotos (imagens locais exportadas, **não** embed oficial do Instagram — pesa e quebra). Botão "Seguir no Instagram". Perfil: `@psicologakellycavalcante` (https://www.instagram.com/psicologakellycavalcante).
+Convite a acompanhar o conteúdo educativo. Carrossel de fotos em pilha (imagens locais exportadas, **não** embed oficial do Instagram — pesa e quebra). Botão "Seguir no Instagram". Perfil: `@psicologakellycavalcante` (https://www.instagram.com/psicologakellycavalcante).
 
-**Desvio deliberado do briefing:** a pedido da cliente, o grid estático de 3–6 posts foi substituído por um carrossel giratório 3D (`ContentCarousel.astro`), adaptado em Astro/TypeScript vanilla — sem React, sem framework de UI — a partir de uma referência React fornecida pela cliente. Por padrão renderiza uma fileira estática (sem JS, ou com `prefers-reduced-motion` até a pessoa dar play); com JavaScript e sem preferência por movimento reduzido, vira um tambor 3D com giro lento e contínuo, arrastável (ponteiro/toque) e pausável por um botão dedicado. Continua evitando o embed oficial do Instagram. As fotos usadas por enquanto são as 4 já aprovadas em outras seções do site (retrato, consultório, retrato-sala, atendimento online) — devem ser trocadas por prints reais dos posts do Instagram assim que a cliente os enviar (ver lista de pendências, seção 10).
+**Desvio deliberado do briefing:** a pedido da cliente, o grid estático de 3–6 posts foi substituído por um carrossel (`ContentCarousel.astro`), em Astro/TypeScript vanilla — sem React, sem framework de UI, sem perspectiva/rotação 3D. Uma primeira versão usou um tambor giratório 3D adaptado de uma referência React da cliente, mas foi rejeitada por ela ("não gostei de como ficou") e substituída pela versão atual: uma pilha de 5 fotos levemente espalhadas e rotacionadas (como fotografias reais deixadas sobre uma mesa), com moldura orgânica assimétrica alternada e halo sage suave atrás. Avança tocando na foto da frente, numa foto que espia atrás, nas setas, ou sozinho a cada ~5s (pausável por um botão dedicado); numeração editorial "01 — 05". A posição de cada foto já nasce definida no HTML (via CSS `calc()`/`min()`, sem JS), então mesmo sem JavaScript a pilha aparece completa e parada, nunca quebrada; com `prefers-reduced-motion`, a troca automática começa desligada. Continua evitando o embed oficial do Instagram. As fotos usadas por enquanto são as 4 já aprovadas em outras seções do site (retrato, consultório, retrato-sala, atendimento online; uma delas repetida para completar 5 posições) — devem ser trocadas por prints reais dos posts do Instagram assim que a cliente os enviar (ver lista de pendências, seção 10).
 
 ### 9. Mapa — onde fica o consultório
 Seção com embed do Google Maps (iframe) mostrando a localização exata do consultório, mais um botão "Ver no Google Maps" que abre a localização em nova aba. Fica entre Instagram e Dúvidas frequentes.
@@ -315,12 +315,12 @@ Valores ainda não fornecidos continuam marcados como `"[PREENCHER]"` em `src/co
 - [x] Mensagem pré-preenchida do WhatsApp — usa a sugestão original do briefing, já estava implementada (`contact.whatsappMessage`)
 - [x] @ do Instagram e URL — `@psicologakellycavalcante` / https://www.instagram.com/psicologakellycavalcante (`contact.instagram`)
 - [x] Fotos em alta resolução (retratos + consultório) — recebidas e otimizadas em `src/assets/images/`
+- [x] Número do CRP — 06/186529, registrada como Kelly Cristina do Nascimento Cavalcante (`professional.crp`)
+- [x] Formação acadêmica — Graduação em Psicologia, Universidade Brasil (2022); Especialização em Análise do Comportamento Aplicada, Faveni (2023) (`about.formation`). **Nota:** a cliente também informou uma formação de Practitioner em PNL (2026), mas ela foi deliberadamente deixada fora do site — PNL não tem base científica consolidada e o CLAUDE.md (seção 2) proíbe associar a psicóloga a "terapias sem base científica"; incluir isso arriscaria o posicionamento científico e possivelmente as normas de publicidade do CFP. Decisão confirmada com o usuário em 2026-08-24.
 
 **Ainda pendentes:**
-- [ ] Número do CRP
 - [ ] E-mail profissional
 - [ ] Domínio final
-- [ ] Formação acadêmica e especializações
 - [ ] Atende convênio? Quais?
 - [ ] Prints/imagens dos posts do Instagram para o grid
 

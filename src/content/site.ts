@@ -17,8 +17,8 @@ export const professional = {
   fullName: "Kelly Cristina Cavalcante",
   shortName: "Kelly Cavalcante",
   role: "Psicóloga Clínica",
-  crp: PLACEHOLDER, // ex.: CRP 06/XXXXX
-  crpLabel: `CRP ${PLACEHOLDER}`,
+  crp: "06/186529",
+  crpLabel: "CRP 06/186529",
   approach: "Psicologia comportamental (análise do comportamento)",
   city: "Nova Odessa",
   state: "SP",
@@ -112,7 +112,7 @@ export const about = {
   ],
   formation: {
     heading: "Formação",
-    text: `Graduação em Psicologia — ${PLACEHOLDER} · Especialização em ${PLACEHOLDER}`,
+    text: "Graduação em Psicologia — Universidade Brasil (2022) · Especialização em Análise do Comportamento Aplicada — Faveni (2023)",
   },
   traits: [
     {
