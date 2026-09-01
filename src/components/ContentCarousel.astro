@@ -1,134 +1,136 @@
 ---
-// Carrossel de fotos da seção "Conteúdo" — pilha de retratos levemente
-// espalhados (como fotografias reais deixadas sobre uma mesa), não um
-// carrossel giratório em 3D. Cada avanço desliza a foto da frente para
-// trás da pilha com uma transição suave em 2D (translate/rotate/scale via
-// CSS puro), sem perspectiva nem matriz 3D.
+// Carrossel de fotos da seção "Conteúdo" — trilha horizontal contínua.
+// Substituiu a pilha de fotos (2026-09) a pedido da cliente, depois de
+// comparar 3 modelos: a trilha venceu por ser a mais leve (scroll nativo
+// com scroll-snap, sem JS de posicionamento) e a mais natural no celular.
 //
-// Sem imagens finais do Instagram ainda (pendência da seção 10 do
-// CLAUDE.md) — usa 5 posições reaproveitando as 4 fotos já aprovadas no
-// site (uma delas repetida) só como placeholder visual.
+// As fotos são prints reais de posts do Instagram, quadrados (~1:1). Por
+// isso a moldura usa aspect-ratio 1/1 — não 4/5 como no modelo antigo —
+// já que esses posts têm texto quase até a borda; um recorte mais alto que
+// largo cortaria títulos e frases. Em 1:1 o corte fica mínimo (só o post 1,
+// levemente retangular, perde ~3% no topo/base, bem dentro da margem em
+// branco do design).
 //
-// Resiliência: a posição de cada foto na pilha (--stack-offset) já nasce
-// definida no HTML, então mesmo sem JavaScript a pilha aparece com a
-// primeira foto na frente e as demais espiando atrás, paradas — nunca
-// quebrada. O JavaScript só acrescenta a troca de foto (clique, setas) e
-// o avanço automático lento, pausável e desligado por padrão quando
-// prefers-reduced-motion está ativo.
+// Resiliência: scroll-snap é comportamento nativo do navegador, então a
+// trilha funciona (arrastar, deslizar no touch) mesmo sem JavaScript. O
+// JS só acrescenta as setas de navegação, o contador "01 — 05" e o arraste
+// com mouse (pointer events) para desktop.
 import { Picture } from "astro:assets";
 import Icon from "./Icon.astro";
-import retratoPhoto from "../assets/images/retrato-perfil.jpg";
-import consultorioPhoto from "../assets/images/consultorio.jpg";
-import salaPhoto from "../assets/images/retrato-sala.png";
-import onlinePhoto from "../assets/images/trabalho-online.jpg";
-import { about, modalities, hero } from "../content/site";
+import post1 from "../assets/images/posts/post-1.png";
+import post2 from "../assets/images/posts/post-2.png";
+import post3 from "../assets/images/posts/post-3.png";
+import post4 from "../assets/images/posts/post-4.png";
+import post5 from "../assets/images/posts/post-5.png";
 
 const slides = [
-  { src: retratoPhoto, alt: about.imageAlt, rotate: -2 },
-  { src: consultorioPhoto, alt: modalities.presencial.imageAlt, rotate: 1.5 },
-  { src: salaPhoto, alt: hero.imageAlt, rotate: -2.5 },
-  { src: onlinePhoto, alt: modalities.online.imageAlt, rotate: 2 },
-  { src: consultorioPhoto, alt: modalities.presencial.imageAlt, rotate: -1 },
+  {
+    src: post1,
+    alt: "Post do Instagram: Terapia é um espaço seguro para ser você — sem julgamento, com empatia, com respeito, com você.",
+  },
+  {
+    src: post2,
+    alt: "Post do Instagram, reflexão: você não pode controlar tudo o que acontece lá fora, mas pode cuidar do que acontece dentro de você.",
+  },
+  {
+    src: post3,
+    alt: "Post do Instagram: pequenas escolhas diárias mudam tudo — comece por você.",
+  },
+  {
+    src: post4,
+    alt: "Post do Instagram, autoconhecimento: entender suas emoções é o primeiro passo para transformá-las.",
+  },
+  {
+    src: post5,
+    alt: "Post do Instagram: você não precisa dar conta de tudo sozinha. Buscar ajuda é um ato de coragem e autocuidado — estou aqui para te ouvir.",
+  },
 ] as const;
 
 const total = String(slides.length).padStart(2, "0");
 ---
 
-<div class="photo-stack mx-auto max-w-xs" data-carousel>
-  <div class="stack-frame">
-    <div
-      class="pointer-events-none absolute inset-0 -z-10 scale-125 rounded-full bg-sage/25 blur-3xl"
-      aria-hidden="true"
-    >
-    </div>
-    <div class="stack" data-stack aria-hidden="true">
-      {
-        slides.map((slide, i) => (
-          <div
-            class:list={["stack-card", i % 2 === 0 ? "radius-organic" : "radius-organic-flip"]}
-            data-card
-            style={`--stack-offset:${i};--base-rotate:${slide.rotate}deg`}
-          >
-            <Picture
-              src={slide.src}
-              alt={slide.alt}
-              formats={["avif", "webp"]}
-              fallbackFormat="jpg"
-              widths={[280, 400, 560]}
-              sizes="(min-width: 640px) 18rem, 70vw"
-              loading="lazy"
-              class="h-full w-full object-cover"
-            />
-          </div>
-        ))
-      }
-    </div>
+<div class="trilha" data-carousel>
+  <div
+    class="trilha-track no-scrollbar -mx-2 flex gap-4 overflow-x-auto px-2 pb-2"
+    data-track
+    tabindex="0"
+    role="group"
+    aria-label="Publicações do Instagram, arraste para navegar"
+  >
+    {
+      slides.map((slide, i) => (
+        <div
+          class:list={[
+            "trilha-card",
+            i % 2 === 0 ? "radius-organic" : "radius-organic-flip",
+          ]}
+          data-card
+        >
+          <Picture
+            src={slide.src}
+            alt={slide.alt}
+            formats={["avif", "webp"]}
+            fallbackFormat="jpg"
+            widths={[240, 340, 480]}
+            sizes="(min-width: 768px) 300px, 62vw"
+            loading="lazy"
+            class="h-full w-full object-cover"
+          />
+        </div>
+      ))
+    }
   </div>
 
-  <div class="mt-7 flex items-center justify-center gap-3">
-    <button type="button" class="stack-btn" data-prev aria-label="Foto anterior">
+  <div class="trilha-thread" aria-hidden="true"></div>
+
+  <div class="mt-6 flex items-center justify-center gap-3">
+    <button type="button" class="trilha-btn tap-target" data-prev aria-label="Foto anterior">
       <Icon name="chevron-right" class="h-4 w-4 rotate-180" />
     </button>
     <p class="caption min-w-[4.5rem] text-center text-graphite" data-counter>01 — {total}</p>
-    <button type="button" class="stack-btn" data-next aria-label="Próxima foto">
+    <button type="button" class="trilha-btn tap-target" data-next aria-label="Próxima foto">
       <Icon name="chevron-right" class="h-4 w-4" />
-    </button>
-    <span class="mx-1 h-px w-5 bg-warmgray" aria-hidden="true"></span>
-    <button
-      type="button"
-      class="stack-btn"
-      data-toggle
-      aria-pressed="false"
-      aria-label="Retomar a troca automática de fotos"
-    >
-      <span data-icon="pause" class="hidden"><Icon name="pause" class="h-4 w-4" /></span>
-      <span data-icon="play"><Icon name="play" class="h-4 w-4" /></span>
     </button>
   </div>
 </div>
 
 <style>
-  .stack-frame {
-    position: relative;
-    isolation: isolate;
-    aspect-ratio: 4 / 5;
-    width: 100%;
+  .no-scrollbar {
+    scrollbar-width: none;
   }
 
-  .stack {
-    position: relative;
-    width: 100%;
-    height: 100%;
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
   }
 
-  .stack-card {
-    position: absolute;
-    inset: 0;
+  .trilha-track {
+    scroll-snap-type: x mandatory;
+    cursor: grab;
+    scroll-behavior: smooth;
+  }
+
+  .trilha-track.dragging {
+    cursor: grabbing;
+    scroll-snap-type: none;
+    scroll-behavior: auto;
+  }
+
+  .trilha-card {
+    flex: 0 0 auto;
+    width: clamp(220px, 62vw, 300px);
+    aspect-ratio: 1 / 1;
     overflow: hidden;
-    cursor: pointer;
-    transform-origin: 50% 88%;
-    /* Da 3ª foto pra trás a posição some (fica coberta), então ela é
-       congelada na posição da 2ª — assim a pilha nunca continua se
-       espalhando pra fora da moldura em telas estreitas; só a opacidade
-       (com --stack-offset "cru") segue caindo até sumir de vez. */
-    --stack-pos: min(var(--stack-offset), 2);
-    translate: calc(var(--stack-pos) * 0.65rem) calc(var(--stack-pos) * 0.5rem);
-    rotate: calc(var(--base-rotate) + var(--stack-pos) * 1.8deg);
-    scale: calc(1 - var(--stack-pos) * 0.05);
-    opacity: calc(1 - var(--stack-offset) * 0.32);
-    z-index: calc(20 - var(--stack-offset));
-    transition:
-      translate 0.7s var(--ease-calm),
-      rotate 0.7s var(--ease-calm),
-      scale 0.7s var(--ease-calm),
-      opacity 0.5s var(--ease-calm);
+    scroll-snap-align: center;
   }
 
-  .caption {
-    font-variant-numeric: tabular-nums;
+  .trilha-thread {
+    height: 1.5px;
+    margin-top: 0.5rem;
+    background: var(--color-gold);
+    opacity: 0.4;
   }
 
-  .stack-btn {
+  .trilha-btn {
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -143,100 +145,102 @@ const total = String(slides.length).padStart(2, "0");
       background-color 0.3s var(--ease-calm);
   }
 
-  .stack-btn:hover {
+  .trilha-btn:hover {
     border-color: var(--color-gold);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .trilha-track {
+      scroll-behavior: auto;
+    }
   }
 </style>
 
 <script>
   const root = document.querySelector<HTMLElement>("[data-carousel]");
-  const stack = root?.querySelector<HTMLElement>("[data-stack]");
-  const cards = stack ? Array.from(stack.querySelectorAll<HTMLElement>("[data-card]")) : [];
+  const track = root?.querySelector<HTMLElement>("[data-track]");
+  const cards = track ? Array.from(track.querySelectorAll<HTMLElement>("[data-card]")) : [];
   const prevBtn = root?.querySelector<HTMLButtonElement>("[data-prev]");
   const nextBtn = root?.querySelector<HTMLButtonElement>("[data-next]");
-  const toggle = root?.querySelector<HTMLButtonElement>("[data-toggle]");
   const counter = root?.querySelector<HTMLElement>("[data-counter]");
-  const iconPause = toggle?.querySelector<HTMLElement>('[data-icon="pause"]');
-  const iconPlay = toggle?.querySelector<HTMLElement>('[data-icon="play"]');
 
-  if (root && stack && prevBtn && nextBtn && toggle && counter && iconPause && iconPlay && cards.length) {
-    const COUNT = cards.length;
-    const AUTOPLAY_MS = 5200;
-    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if (root && track && prevBtn && nextBtn && counter && cards.length) {
+    const total = cards.length;
 
-    let current = 0;
-    let userPaused = reduceMotion;
-    let inView = false;
-    let timer = 0;
-
-    const layout = () => {
+    const nearestIndex = () => {
+      const center = track.scrollLeft + track.clientWidth / 2;
+      let best = 0;
+      let bestDist = Infinity;
       cards.forEach((card, i) => {
-        const offset = (i - current + COUNT) % COUNT;
-        card.style.setProperty("--stack-offset", String(offset));
-        card.style.pointerEvents = offset <= 2 ? "auto" : "none";
+        const cardCenter = card.offsetLeft + card.offsetWidth / 2;
+        const dist = Math.abs(cardCenter - center);
+        if (dist < bestDist) {
+          bestDist = dist;
+          best = i;
+        }
       });
-      counter.textContent = `${String(current + 1).padStart(2, "0")} — ${String(COUNT).padStart(2, "0")}`;
+      return best;
     };
 
-    const setToggleUI = () => {
-      toggle.setAttribute("aria-pressed", String(!userPaused));
-      toggle.setAttribute(
-        "aria-label",
-        userPaused ? "Retomar a troca automática de fotos" : "Pausar a troca automática de fotos",
-      );
-      iconPause.classList.toggle("hidden", userPaused);
-      iconPlay.classList.toggle("hidden", !userPaused);
+    const updateCounter = () => {
+      const i = nearestIndex();
+      counter.textContent = `${String(i + 1).padStart(2, "0")} — ${String(total).padStart(2, "0")}`;
     };
 
-    // Reagenda a si mesma a cada troca — evita o desvio de um setInterval
-    // fixo e para de vez enquanto pausada ou fora da tela.
-    const scheduleNext = () => {
-      window.clearTimeout(timer);
-      if (userPaused || !inView) return;
-      timer = window.setTimeout(() => {
-        goTo(current + 1);
-        scheduleNext();
-      }, AUTOPLAY_MS);
+    const goTo = (index: number) => {
+      const clamped = Math.max(0, Math.min(total - 1, index));
+      cards[clamped]?.scrollIntoView({ behavior: "smooth", inline: "center", block: "nearest" });
     };
 
-    function goTo(index: number) {
-      current = ((index % COUNT) + COUNT) % COUNT;
-      layout();
-    }
-
-    new IntersectionObserver(
-      (entries) => {
-        inView = entries[0]?.isIntersecting ?? false;
-        if (inView) scheduleNext();
-        else window.clearTimeout(timer);
-      },
-      { threshold: 0.2 },
-    ).observe(stack);
-
-    prevBtn.addEventListener("click", () => {
-      goTo(current - 1);
-      scheduleNext();
+    let scrollTimer = 0;
+    track.addEventListener("scroll", () => {
+      window.clearTimeout(scrollTimer);
+      scrollTimer = window.setTimeout(updateCounter, 80);
     });
 
-    nextBtn.addEventListener("click", () => {
-      goTo(current + 1);
-      scheduleNext();
+    prevBtn.addEventListener("click", () => goTo(nearestIndex() - 1));
+    nextBtn.addEventListener("click", () => goTo(nearestIndex() + 1));
+
+    track.addEventListener("keydown", (e) => {
+      if (e.key === "ArrowRight") {
+        e.preventDefault();
+        goTo(nearestIndex() + 1);
+      } else if (e.key === "ArrowLeft") {
+        e.preventDefault();
+        goTo(nearestIndex() - 1);
+      }
     });
 
-    cards.forEach((card, i) => {
-      card.addEventListener("click", () => {
-        goTo(i === current ? current + 1 : i);
-        scheduleNext();
-      });
+    // Arraste com mouse — o touch e o trackpad já rolam nativamente.
+    let isDown = false;
+    let startX = 0;
+    let startScroll = 0;
+
+    track.addEventListener("pointerdown", (e) => {
+      if (e.pointerType === "touch") return;
+      isDown = true;
+      track.classList.add("dragging");
+      startX = e.clientX;
+      startScroll = track.scrollLeft;
+      track.setPointerCapture(e.pointerId);
     });
 
-    toggle.addEventListener("click", () => {
-      userPaused = !userPaused;
-      setToggleUI();
-      scheduleNext();
+    track.addEventListener("pointermove", (e) => {
+      if (!isDown) return;
+      track.scrollLeft = startScroll - (e.clientX - startX);
     });
 
-    setToggleUI();
-    layout();
+    const stopDrag = () => {
+      if (!isDown) return;
+      isDown = false;
+      track.classList.remove("dragging");
+      goTo(nearestIndex());
+    };
+
+    track.addEventListener("pointerup", stopDrag);
+    track.addEventListener("pointercancel", stopDrag);
+    track.addEventListener("pointerleave", stopDrag);
+
+    updateCounter();
   }
 </script>

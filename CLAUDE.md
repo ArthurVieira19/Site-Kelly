@@ -42,7 +42,7 @@ A profissional é psicóloga registrada no CRP. A Resolução CFP nº 11/2018 e 
 - **Profissão:** Psicóloga clínica
 - **Abordagem:** Psicologia comportamental (análise do comportamento)
 - **CRP:** 06/186529 (nome de registro: Kelly Cristina do Nascimento Cavalcante)
-- **Atendimento:** presencial em Nova Odessa/SP e online para todo o Brasil e exterior
+- **Atendimento:** presencial em Nova Odessa/SP e online para todo o Brasil (não atende exterior nem outros idiomas — decisão confirmada com o usuário em 2026-09-01)
 - **Público:** mulheres adultas
 
 **Como ela trabalha (usar como base para a seção "Sobre"):** o trabalho parte da compreensão da relação entre pensamentos, emoções e comportamentos, ajudando cada paciente a desenvolver novos repertórios comportamentais, fortalecer a autoestima, lidar melhor com desafios emocionais e construir uma vida mais equilibrada. Une ciência, acolhimento e humanização, respeitando a individualidade de cada paciente.
@@ -197,7 +197,7 @@ Numeração 01/02/03 é justificada aqui: é uma sequência real.
 ### 6. Modalidades de atendimento
 Dois blocos:
 - **Presencial — Nova Odessa/SP** — endereço: R. João Bassora, 398 - Jardim Santa Rosa, Nova Odessa/SP, CEP 13460-076. Horário: segunda a sexta, 08:00–19:00 (sábado e domingo fechado). Foto do consultório.
-- **Online — Brasil e exterior** — vídeo chamada, mesma qualidade de acompanhamento, atende Região Metropolitana de Campinas e pacientes de todo o Brasil.
+- **Online — Todo o Brasil** — vídeo chamada, mesma qualidade de acompanhamento, atende Região Metropolitana de Campinas e pacientes de todo o Brasil.
 
 > O mapa do consultório **não** fica embutido neste bloco — é sua própria seção (ver item 9, "Mapa"). Ver nota de desvio do briefing nessa seção.
 
@@ -209,7 +209,7 @@ Honestidade que qualifica o lead e constrói confiança.
 ### 8. Conteúdo — Instagram
 Convite a acompanhar o conteúdo educativo. Carrossel de fotos em pilha (imagens locais exportadas, **não** embed oficial do Instagram — pesa e quebra). Botão "Seguir no Instagram". Perfil: `@psicologakellycavalcante` (https://www.instagram.com/psicologakellycavalcante).
 
-**Desvio deliberado do briefing:** a pedido da cliente, o grid estático de 3–6 posts foi substituído por um carrossel (`ContentCarousel.astro`), em Astro/TypeScript vanilla — sem React, sem framework de UI, sem perspectiva/rotação 3D. Uma primeira versão usou um tambor giratório 3D adaptado de uma referência React da cliente, mas foi rejeitada por ela ("não gostei de como ficou") e substituída pela versão atual: uma pilha de 5 fotos levemente espalhadas e rotacionadas (como fotografias reais deixadas sobre uma mesa), com moldura orgânica assimétrica alternada e halo sage suave atrás. Avança tocando na foto da frente, numa foto que espia atrás, nas setas, ou sozinho a cada ~5s (pausável por um botão dedicado); numeração editorial "01 — 05". A posição de cada foto já nasce definida no HTML (via CSS `calc()`/`min()`, sem JS), então mesmo sem JavaScript a pilha aparece completa e parada, nunca quebrada; com `prefers-reduced-motion`, a troca automática começa desligada. Continua evitando o embed oficial do Instagram. As fotos usadas por enquanto são as 4 já aprovadas em outras seções do site (retrato, consultório, retrato-sala, atendimento online; uma delas repetida para completar 5 posições) — devem ser trocadas por prints reais dos posts do Instagram assim que a cliente os enviar (ver lista de pendências, seção 10).
+**Desvio deliberado do briefing:** a pedido da cliente, o grid estático de 3–6 posts foi substituído por um carrossel (`ContentCarousel.astro`), em Astro/TypeScript vanilla — sem React, sem framework de UI, sem perspectiva/rotação 3D. Uma primeira versão usou um tambor giratório 3D adaptado de uma referência React da cliente, mas foi rejeitada por ela ("não gostei de como ficou") e substituída pela versão atual: uma pilha de 5 fotos levemente espalhadas e rotacionadas (como fotografias reais deixadas sobre uma mesa), com moldura orgânica assimétrica alternada e halo sage suave atrás. Avança tocando na foto da frente, numa foto que espia atrás, nas setas, ou sozinho a cada ~5s (pausável por um botão dedicado); numeração editorial "01 — 05". A posição de cada foto já nasce definida no HTML (via CSS `calc()`/`min()`, sem JS), então mesmo sem JavaScript a pilha aparece completa e parada, nunca quebrada; com `prefers-reduced-motion`, a troca automática começa desligada. Continua evitando o embed oficial do Instagram. As fotos são 5 prints reais de posts do Instagram enviados pela cliente em 2026-09-01, armazenados em `src/assets/images/posts/`.
 
 ### 9. Mapa — onde fica o consultório
 Seção com embed do Google Maps (iframe) mostrando a localização exata do consultório, mais um botão "Ver no Google Maps" que abre a localização em nova aba. Fica entre Instagram e Dúvidas frequentes.
@@ -319,10 +319,11 @@ Valores ainda não fornecidos continuam marcados como `"[PREENCHER]"` em `src/co
 - [x] Formação acadêmica — Graduação em Psicologia, Universidade Brasil (2022); Especialização em Análise do Comportamento Aplicada, Faveni (2023) (`about.formation`). **Nota:** a cliente também informou uma formação de Practitioner em PNL (2026), mas ela foi deliberadamente deixada fora do site — PNL não tem base científica consolidada e o CLAUDE.md (seção 2) proíbe associar a psicóloga a "terapias sem base científica"; incluir isso arriscaria o posicionamento científico e possivelmente as normas de publicidade do CFP. Decisão confirmada com o usuário em 2026-08-24.
 - [x] E-mail profissional — kellypsicobr@gmail.com (`contact.email`)
 
+- [x] Prints/imagens dos posts do Instagram para o carrossel — 5 fotos recebidas em 2026-09-01, em `src/assets/images/posts/` (`ContentCarousel.astro`)
+
 **Ainda pendentes:**
 - [ ] Domínio final
 - [ ] Atende convênio? Quais?
-- [ ] Prints/imagens dos posts do Instagram para o grid
 
 ---
 

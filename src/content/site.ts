@@ -186,8 +186,8 @@ export const modalities = {
     imageAlt: "Consultório de Kelly Cavalcante em Nova Odessa/SP",
   },
   online: {
-    title: "Online — Brasil e exterior",
-    text: `Atendimento por videochamada, com a mesma qualidade de acompanhamento do presencial. Atendo a ${professional.region} e pacientes de todo o Brasil e do exterior.`,
+    title: "Online — Todo o Brasil",
+    text: `Atendimento por videochamada, com a mesma qualidade de acompanhamento do presencial. Atendo a ${professional.region} e pacientes de todo o Brasil.`,
     imageAlt: "Atendimento psicológico online por videochamada",
   },
 } as const;
