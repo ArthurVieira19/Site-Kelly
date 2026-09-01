@@ -161,8 +161,8 @@ Nome "Kelly Cavalcante" + "Psicóloga Clínica · CRP `[PREENCHER]`" · links â
 
 ### 1. Hero — o espelho
 - Eyebrow (script): *Psicologia clínica para mulheres*
-- **H1:** "Há quanto tempo você cuida de todos antes de cuidar de você?"
-- **Sub:** "Um espaço seguro para compreender suas emoções, reconstruir sua identidade e viver com mais leveza. Atendimento presencial em Nova Odessa e online para todo o Brasil."
+- **H1:** "Se reconectar. Se reconstruir." (atualizado a pedido da cliente em 2026-09-01, substituindo a versão original em formato de pergunta — ver `hero.headline` em `site.ts`)
+- **Sub:** "E viver com mais leveza e propósito. Um espaço seguro para compreender suas emoções e seguir em frente, no seu tempo — presencial em Nova Odessa e online para todo o Brasil."
 - CTA primário: **Conversar pelo WhatsApp** · CTA secundário (âncora): **Entender como funciona**
 - Assinatura: Kelly Cristina Cavalcante · Psicóloga Clínica · CRP `[PREENCHER]`
 - Imagem: retrato da Kelly (a foto de blazer sentada na poltrona funciona bem). Deve ser o LCP — pré-carregar, AVIF/WebP, `fetchpriority="high"`.
@@ -317,9 +317,9 @@ Valores ainda não fornecidos continuam marcados como `"[PREENCHER]"` em `src/co
 - [x] Fotos em alta resolução (retratos + consultório) — recebidas e otimizadas em `src/assets/images/`
 - [x] Número do CRP — 06/186529, registrada como Kelly Cristina do Nascimento Cavalcante (`professional.crp`)
 - [x] Formação acadêmica — Graduação em Psicologia, Universidade Brasil (2022); Especialização em Análise do Comportamento Aplicada, Faveni (2023) (`about.formation`). **Nota:** a cliente também informou uma formação de Practitioner em PNL (2026), mas ela foi deliberadamente deixada fora do site — PNL não tem base científica consolidada e o CLAUDE.md (seção 2) proíbe associar a psicóloga a "terapias sem base científica"; incluir isso arriscaria o posicionamento científico e possivelmente as normas de publicidade do CFP. Decisão confirmada com o usuário em 2026-08-24.
+- [x] E-mail profissional — kellypsicobr@gmail.com (`contact.email`)
 
 **Ainda pendentes:**
-- [ ] E-mail profissional
 - [ ] Domínio final
 - [ ] Atende convênio? Quais?
 - [ ] Prints/imagens dos posts do Instagram para o grid

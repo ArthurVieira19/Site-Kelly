@@ -30,7 +30,7 @@ export const contact = {
   whatsappDisplay: "(19) 99101-6969",
   whatsappMessage:
     "Olá, Kelly. Vim pelo site e gostaria de saber mais sobre os atendimentos.",
-  email: PLACEHOLDER, // ex.: contato@kellycavalcante.com.br
+  email: "kellypsicobr@gmail.com",
   instagram: {
     handle: "@psicologakellycavalcante",
     url: "https://www.instagram.com/psicologakellycavalcante",
@@ -79,9 +79,9 @@ export const nav = [
 
 export const hero = {
   eyebrow: "Psicologia clínica para mulheres",
-  headline: "Há quanto tempo você cuida de todos antes de cuidar de você?",
+  headline: "Se reconectar. Se reconstruir.",
   sub:
-    "Um espaço seguro para compreender suas emoções, reconstruir sua identidade e viver com mais leveza. Atendimento presencial em Nova Odessa e online para todo o Brasil.",
+    "E viver com mais leveza e propósito. Um espaço seguro para compreender suas emoções e seguir em frente, no seu tempo — presencial em Nova Odessa e online para todo o Brasil.",
   ctaPrimary: "Conversar pelo WhatsApp",
   ctaSecondary: "Entender como funciona",
   imageAlt: "Kelly Cavalcante, psicóloga clínica, sorrindo em seu espaço de atendimento",
@@ -261,6 +261,22 @@ export const faq = {
     {
       q: "E se eu não souber o que falar?",
       a: "Não tem problema. Não é preciso chegar com um roteiro pronto — a conversa vai se construindo aos poucos, no seu tempo.",
+    },
+    {
+      q: "Com que frequência acontecem as sessões?",
+      a: "Geralmente os encontros são semanais, principalmente no início do processo. Com o tempo, essa frequência pode ser repensada de acordo com o que fizer sentido para você.",
+    },
+    {
+      q: "Já fiz terapia antes e não deu certo. Pode ser diferente dessa vez?",
+      a: "Cada processo é único, assim como o vínculo entre paciente e psicóloga. Há espaço para você trazer o que não funcionou antes, para construirmos juntas uma forma de trabalhar que faça sentido para você.",
+    },
+    {
+      q: "Preciso de um diagnóstico ou encaminhamento médico para começar?",
+      a: "Não. Você pode buscar acompanhamento psicológico independentemente de ter um diagnóstico. Se você já tem acompanhamento médico ou psiquiátrico, ele pode caminhar junto com a terapia, se fizer sentido para você.",
+    },
+    {
+      q: "O atendimento é só para mulheres adultas?",
+      a: "Sim, o trabalho é voltado para mulheres adultas. Se você está buscando acompanhamento para uma adolescente ou para outro público, posso indicar profissionais mais adequados para essa necessidade.",
     },
     {
       q: "Atende convênio?",

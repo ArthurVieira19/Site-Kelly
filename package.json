@@ -11,11 +11,11 @@
     "astro": "astro"
   },
   "dependencies": {
-    "astro": "^5.18.2",
     "@fontsource-variable/cormorant-garamond": "^5.2.5",
     "@fontsource/nunito-sans": "^5.2.5",
     "@fontsource/parisienne": "^5.2.5",
     "@tailwindcss/vite": "^4.3.3",
+    "astro": "^7.2.10",
     "tailwindcss": "^4.3.3"
   },
   "devDependencies": {
