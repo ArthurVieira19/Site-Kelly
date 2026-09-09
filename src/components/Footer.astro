@@ -31,8 +31,8 @@ const year = new Date().getFullYear();
             <Icon name="map-pin" class="mt-0.5 h-4 w-4 shrink-0" strokeClass="icon-line" />
             <span class="text-canvas">{contact.address.street}, {contact.address.city}/{contact.address.state}</span>
           </li>
-          <li class="flex items-start gap-3">
-            <Icon name="whatsapp" class="mt-0.5 h-4 w-4 shrink-0 text-gold" />
+          <li class="flex items-center gap-3">
+            <Icon name="whatsapp" class="h-4 w-4 shrink-0 text-gold" />
             <a
               href={whatsappUrl()}
               target="_blank"
@@ -42,8 +42,8 @@ const year = new Date().getFullYear();
               WhatsApp
             </a>
           </li>
-          <li class="flex items-start gap-3">
-            <Icon name="mail" class="mt-0.5 h-4 w-4 shrink-0" strokeClass="icon-line" />
+          <li class="flex items-center gap-3">
+            <Icon name="mail" class="h-4 w-4 shrink-0" strokeClass="icon-line" />
             <span class="text-canvas">{contact.email}</span>
           </li>
         </ul>
@@ -52,8 +52,8 @@ const year = new Date().getFullYear();
       <nav aria-label="Links">
         <p class="caption text-sand">Acompanhe</p>
         <ul class="mt-4 space-y-3">
-          <li class="flex items-start gap-3">
-            <Icon name="instagram" class="mt-0.5 h-4 w-4 shrink-0" strokeClass="icon-line" />
+          <li class="flex items-center gap-3">
+            <Icon name="instagram" class="h-4 w-4 shrink-0" strokeClass="icon-line" />
             <a
               href={contact.instagram.url}
               target="_blank"

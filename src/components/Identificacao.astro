@@ -17,11 +17,11 @@ import { identification } from "../content/site";
       {
         identification.items.map((item, i) => (
           <li
-            class="radius-organic bg-sand/70 p-8"
+            class="radius-organic bg-sand/70 p-8 text-center"
             data-reveal
             style={`transition-delay:${Math.min(i, 4) * 80}ms`}
           >
-            <Icon name="heart" class="h-5 w-5 text-gold" />
+            <Icon name="heart" class="mx-auto h-5 w-5 text-gold" />
             <p class="font-display mt-4 text-xl leading-snug text-coffee">“{item}”</p>
           </li>
         ))
