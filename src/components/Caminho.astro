@@ -10,7 +10,7 @@ import { path } from "../content/site";
       <h2 id="caminho-heading" class="mt-4">{path.heading}</h2>
     </div>
 
-    <ol class="mt-16 grid gap-10 md:grid-cols-3 md:gap-8">
+    <ol class="mt-16 grid grid-cols-1 gap-10 md:grid-cols-3 md:gap-8">
       {
         path.steps.map((step, i) => (
           <li class="relative" data-reveal style={`transition-delay:${i * 100}ms`}>
