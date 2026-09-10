@@ -7,12 +7,12 @@ import { forWho } from "../content/site";
 <section id="para-quem" class="relative section-padding bg-taupe/20" aria-labelledby="para-quem-heading">
   <Container>
     <div class="mx-auto max-w-2xl text-center" data-reveal>
-      <p class="eyebrow">{forWho.eyebrow}</p>
+      <p class="eyebrow text-center">{forWho.eyebrow}</p>
       <h2 id="para-quem-heading" class="mt-4">{forWho.heading}</h2>
     </div>
 
     <div class="mt-14 grid gap-6 md:grid-cols-2">
-      <div class="radius-organic bg-canvas p-9" data-reveal>
+      <div class="radius-organic bg-sage/70 p-9" data-reveal>
         <h3>{forWho.isForHeading}</h3>
         <ul class="mt-5 space-y-4">
           {
@@ -26,7 +26,7 @@ import { forWho } from "../content/site";
         </ul>
       </div>
 
-      <div class="radius-organic-flip bg-canvas p-9" data-reveal style="transition-delay:100ms">
+      <div class="radius-organic-flip bg-sage/70 p-9" data-reveal style="transition-delay:100ms">
         <h3>{forWho.isNotHeading}</h3>
         <ul class="mt-5 space-y-4">
           {

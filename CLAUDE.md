@@ -224,7 +224,8 @@ Seção com embed do Google Maps (iframe) mostrando a localização exata do con
 - O que eu falo fica em sigilo?
 - Como funcionam os valores e o pagamento? → responder que os valores são informados no primeiro contato pelo WhatsApp. **Nunca publicar preço na página.**
 - E se eu não souber o que falar?
-- Atende convênio? → `[PREENCHER]`
+- Você atende convênio ou só particular? → resposta preenchida em 2026-09-10: atendimento exclusivamente particular; Notas Fiscais emitidas para pedido de reembolso junto ao plano.
+- Você atende adolescentes ou só adultos? → **atualizado em 2026-09-10** a pedido da cliente, substituindo a pergunta anterior ("O atendimento é só para mulheres adultas?"), que dizia que ela não atendia adolescentes. Nova resposta: foco principal são mulheres adultas, mas atende eventualmente adolescentes a partir de 16 anos, com abertura da pessoa ao processo e consentimento dos responsáveis.
 
 ### 11. CTA final — o convite
 Fundo `sage`, texto centralizado, sem urgência.
@@ -320,10 +321,10 @@ Valores ainda não fornecidos continuam marcados como `"[PREENCHER]"` em `src/co
 - [x] E-mail profissional — kellypsicobr@gmail.com (`contact.email`)
 
 - [x] Prints/imagens dos posts do Instagram para o carrossel — 5 fotos recebidas em 2026-09-01, em `src/assets/images/posts/` (`ContentCarousel.astro`)
+- [x] Atende convênio? — não, atendimento exclusivamente particular; emite Nota Fiscal para reembolso junto ao plano de saúde da paciente. Preenchido em 2026-09-10 no FAQ (`content.faq`)
 
 **Ainda pendentes:**
 - [ ] Domínio final
-- [ ] Atende convênio? Quais?
 
 ---
 

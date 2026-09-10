@@ -275,12 +275,12 @@ export const faq = {
       a: "Não. Você pode buscar acompanhamento psicológico independentemente de ter um diagnóstico. Se você já tem acompanhamento médico ou psiquiátrico, ele pode caminhar junto com a terapia, se fizer sentido para você.",
     },
     {
-      q: "O atendimento é só para mulheres adultas?",
-      a: "Sim, o trabalho é voltado para mulheres adultas. Se você está buscando acompanhamento para uma adolescente ou para outro público, posso indicar profissionais mais adequados para essa necessidade.",
+      q: "Você atende adolescentes ou só adultos?",
+      a: "Meu foco principal é o atendimento de pessoas adultas, especialmente mulheres que estão buscando se entender melhor, lidar com emoções difíceis ou viver relações mais saudáveis. Mas, eventualmente, atendo adolescentes a partir de 16 anos, desde que estejam abertos ao processo e com consentimento dos responsáveis. O mais importante pra mim é que a pessoa deseje, de fato, estar ali — mesmo que tenha dúvidas ou inseguranças no início. Se for o seu caso (ou o da sua filha, por exemplo), a gente pode conversar e entender se faz sentido iniciarmos esse processo.",
     },
     {
-      q: "Atende convênio?",
-      a: PLACEHOLDER,
+      q: "Você atende convênio ou só particular?",
+      a: "Atualmente, meus atendimentos são exclusivamente particulares. Isso significa que não atendo por convênios ou planos de saúde. No entanto, se você possui um plano que reembolsa sessões de psicoterapia, as Notas Fiscais que emito podem ser usadas para que você solicite reembolso a seu plano de saúde. É importante verificar com seu plano os critérios e valores cobertos.",
     },
   ],
 } as const;

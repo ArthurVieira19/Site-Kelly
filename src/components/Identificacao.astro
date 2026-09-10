@@ -9,7 +9,7 @@ import { identification } from "../content/site";
   <FioMarker icon="leaf" />
   <Container>
     <div class="mx-auto max-w-2xl text-center" data-reveal>
-      <p class="eyebrow">{identification.eyebrow}</p>
+      <p class="eyebrow text-center">{identification.eyebrow}</p>
       <h2 id="identificacao-heading" class="mt-4">{identification.heading}</h2>
     </div>
 
@@ -17,7 +17,7 @@ import { identification } from "../content/site";
       {
         identification.items.map((item, i) => (
           <li
-            class="radius-organic bg-sand/70 p-8 text-center"
+            class="radius-organic bg-sage/70 p-8 text-center"
             data-reveal
             style={`transition-delay:${Math.min(i, 4) * 80}ms`}
           >
