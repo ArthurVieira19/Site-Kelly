@@ -31,7 +31,6 @@ export function buildStructuredData() {
       { "@type": "AdministrativeArea", name: professional.region },
       { "@type": "Country", name: "Brasil" },
     ],
-    medicalSpecialty: "Psychiatric",
     openingHoursSpecification: {
       "@type": "OpeningHoursSpecification",
       dayOfWeek: [

@@ -14,7 +14,7 @@ export const site = {
 } as const;
 
 export const professional = {
-  fullName: "Kelly Cristina Cavalcante",
+  fullName: "Kelly Cavalcante",
   shortName: "Kelly Cavalcante",
   role: "Psicóloga Clínica",
   crp: "06/186529",
@@ -78,7 +78,7 @@ export const nav = [
 ] as const;
 
 export const hero = {
-  eyebrow: "Psicologia clínica para mulheres",
+  eyebrow: "Psicologia para mulheres",
   headline: "Se reconectar. Se reconstruir.",
   sub:
     "E viver com mais leveza e propósito. Um espaço seguro para compreender suas emoções e seguir em frente, no seu tempo — presencial em Nova Odessa e online para todo o Brasil.",
@@ -141,11 +141,11 @@ export const howItWorks = {
     },
     {
       title: "O que acontece em uma sessão",
-      text: "Cada sessão é um espaço de escuta e conversa, no seu tempo. Juntas, organizamos o que você traz, entendemos padrões e construímos, aos poucos, novas formas de lidar com o que te incomoda.",
+      text: "Cada sessão é um espaço de escuta, no seu tempo. Juntas, organizamos o que você traz, entendemos padrões e construímos, aos poucos, novas formas de lidar com o que te incomoda.",
     },
     {
       title: "Quanto tempo dura um processo",
-      text: "Cada pessoa tem seu próprio ritmo. O tempo de acompanhamento varia para cada caso e é conversado abertamente com você ao longo do processo.",
+      text: "Cada pessoa tem seu próprio ritmo. O tempo de acompanhamento varia para cada caso.",
     },
     {
       title: "Sigilo profissional",
@@ -211,6 +211,7 @@ export const forWho = {
   isFor: [
     "busca autoconhecimento e deseja compreender melhor suas emoções",
     "sente que a ansiedade e a sobrecarga têm tomado espaço no seu dia a dia",
+    "quer fortalecer a autoestima e se relacionar consigo mesma com mais gentileza",
     "quer reconstruir sua identidade e sua relação consigo mesma",
     "procura um acompanhamento com vínculo, no seu tempo",
   ],
@@ -236,7 +237,7 @@ export const faq = {
   items: [
     {
       q: "Como sei se preciso de terapia?",
-      a: "Não existe um momento certo ou um sofrimento mínimo necessário para começar. Se você sente que algo pede atenção — cansaço emocional, ansiedade, dificuldade em lidar com alguma situação — já é um bom motivo para conversar.",
+      a: "Não existe um momento certo ou um sofrimento mínimo necessário para começar. Se você sente que algo pede atenção — cansaço emocional, ansiedade, dificuldade em lidar com alguma situação — já é um bom motivo para iniciar o processo terapêutico.",
     },
     {
       q: "Nunca fiz terapia. Como é a primeira sessão?",
@@ -247,8 +248,8 @@ export const faq = {
       a: "Sim. O acompanhamento por videochamada segue a mesma estrutura, ética e qualidade de escuta do atendimento presencial.",
     },
     {
-      q: "Quanto tempo dura o processo?",
-      a: "Varia para cada pessoa e é conversado com você ao longo do acompanhamento. Não há um prazo fixo — o ritmo é definido junto com você.",
+      q: "Por quanto tempo vou precisar fazer terapia?",
+      a: "Cada pessoa tem um tempo e uma necessidade diferente. A duração do acompanhamento é construída ao longo do processo, respeitando seu momento, suas necessidades e seus objetivos.",
     },
     {
       q: "O que eu falo fica em sigilo?",
@@ -260,7 +261,7 @@ export const faq = {
     },
     {
       q: "E se eu não souber o que falar?",
-      a: "Não tem problema. Não é preciso chegar com um roteiro pronto — a conversa vai se construindo aos poucos, no seu tempo.",
+      a: "Não tem problema. Não é preciso chegar com um roteiro pronto — o processo vai se construindo aos poucos, no seu tempo.",
     },
     {
       q: "Com que frequência acontecem as sessões?",
@@ -292,7 +293,7 @@ export const ctaFinal = {
 } as const;
 
 export const footer = {
-  developmentCredit: PLACEHOLDER, // nome do desenvolvedor/agência para o crédito no rodapé
+  developmentCredit: "Arthur Gobatto",
   privacyLabel: "Política de Privacidade",
 } as const;
 
