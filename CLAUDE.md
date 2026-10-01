@@ -130,7 +130,7 @@ Três papéis. Carregar via `@fontsource` (self-hosted, sem chamada ao Google Fo
 
 - **Display — `Cormorant Garamond`** (serif de alto contraste, delicada): H1, H2 e números de seção. Pesos 400 e 600. Tracking levemente negativo em tamanhos grandes.
 - **Corpo — `Nunito Sans`** (sans humanista, terminais suaves): parágrafos, listas, botões, FAQ. Pesos 400 e 600. `line-height: 1.7` no corpo.
-- **Acento — `Parisienne`** (script, equivalente livre ao manuscrito do manual): apenas em eyebrows e em **no máximo 3 palavras por página inteira**. Nunca em frase completa, nunca abaixo de 28px, nunca como texto essencial (sempre acompanhado de texto legível).
+- **Acento — `Parisienne`** (script, equivalente livre ao manuscrito do manual): apenas em eyebrows e em **no máximo 3 palavras por página inteira**. Nunca em frase completa, nunca abaixo de 28px, **exceção aprovada pela cliente/usuário em 2026-10-01: a frase do hero "Você não precisa dar conta de tudo sozinha" (`hero.tagline`) é inteira em script**, nunca como texto essencial (sempre acompanhado de texto legível).
 
 **Escala:** 
 `h1` clamp(2.5rem, 6vw, 4.5rem) · `h2` clamp(2rem, 4vw, 3rem) · `h3` 1.5rem · corpo 1.0625rem · caption 0.875rem uppercase tracking 0.12em.

@@ -79,7 +79,7 @@ export const nav = [
 
 export const hero = {
   eyebrow: "Psicologia para mulheres",
-  headline: "Se reconectar. Se reconstruir.",
+  tagline: "Você não precisa dar conta de tudo sozinha",
   sub:
     "E viver com mais leveza e propósito. Um espaço seguro para compreender suas emoções e seguir em frente, no seu tempo — presencial em Nova Odessa e online para todo o Brasil.",
   ctaPrimary: "Conversar pelo WhatsApp",
