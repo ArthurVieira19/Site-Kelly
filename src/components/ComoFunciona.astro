@@ -25,7 +25,7 @@ const icons = ["sprout", "compass", "clock", "shield"] as const;
           >
             <Icon name={icons[i]} class="h-6 w-6" />
             <h3 class="mt-4">{item.title}</h3>
-            <p class="measure mt-2 text-graphite">{item.text}</p>
+            <p class="measure mt-2 text-justify hyphens-auto text-graphite">{item.text}</p>
           </div>
         ))
       }
