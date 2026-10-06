@@ -9,6 +9,7 @@ export function buildStructuredData() {
     "@type": "Psychologist",
     name: professional.fullName,
     image: new URL("/og-image.jpg", site.url).toString(),
+    logo: new URL("/icon-512.png", site.url).toString(),
     description: site.meta.description,
     telephone: contact.whatsappNumber,
     email: contact.email,

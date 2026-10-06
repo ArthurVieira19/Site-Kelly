@@ -1,6 +1,8 @@
 ---
+import { Image } from "astro:assets";
 import Icon from "./Icon.astro";
 import Container from "./Container.astro";
+import logotipo from "../assets/images/logo/logotipo.png";
 import {
   professional,
   contact,
@@ -16,6 +18,17 @@ const year = new Date().getFullYear();
   <Container class="section-padding !py-16">
     <div class="grid grid-cols-1 gap-12 md:grid-cols-3">
       <div>
+        <div class="mb-6 inline-block rounded-[0_2.5rem_0_2.5rem] bg-canvas px-6 py-4">
+          <Image
+            src={logotipo}
+            alt={`${professional.shortName} · ${professional.role}`}
+            format="webp"
+            widths={[224, 448]}
+            sizes="224px"
+            loading="lazy"
+            class="h-auto w-56"
+          />
+        </div>
         <p class="font-display text-2xl font-semibold">{professional.fullName}</p>
         <p class="caption mt-2 text-sand">{professional.role} · {professional.crpLabel}</p>
         <p class="measure mt-5 text-canvas">

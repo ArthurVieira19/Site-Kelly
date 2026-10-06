@@ -1,5 +1,7 @@
 ---
+import { Image } from "astro:assets";
 import Base from "../layouts/Base.astro";
+import logotipo from "../assets/images/logo/logotipo.png";
 import Container from "../components/Container.astro";
 import Icon from "../components/Icon.astro";
 import { professional, whatsappUrl } from "../content/site";
@@ -12,6 +14,15 @@ import { professional, whatsappUrl } from "../content/site";
 >
   <section class="section-padding">
     <Container class="max-w-xl text-center">
+      <Image
+        src={logotipo}
+        alt={`${professional.shortName} · ${professional.role}`}
+        format="webp"
+        widths={[240, 480]}
+        sizes="240px"
+        loading="eager"
+        class="mx-auto mb-8 h-auto w-60"
+      />
       <p class="eyebrow">404</p>
       <h1 class="mt-4 text-4xl md:text-5xl">Esta página não existe mais por aqui.</h1>
       <p class="measure mx-auto mt-4 text-graphite">

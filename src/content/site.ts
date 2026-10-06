@@ -112,7 +112,7 @@ export const about = {
   ],
   formation: {
     heading: "Formação",
-    text: "Graduação em Psicologia — Universidade Brasil (2022) · Especialização em Análise do Comportamento Aplicada — Faveni (2023)",
+    text: "Graduação em Psicologia · Especialização em Análise do Comportamento Aplicada",
   },
   traits: [
     {
@@ -202,6 +202,17 @@ export const mapSection = {
   externalUrl:
     "https://www.google.com/maps/search/?api=1&query=Kelly+Cavalcante+Psic%C3%B3loga+Cl%C3%ADnica+Nova+Odessa",
   ctaLabel: "Ver no Google Maps",
+} as const;
+
+// Perfil no Google Meu Negócio. Deliberadamente SEM nota, contagem ou trechos de
+// avaliações: a publicidade do psicólogo não pode reproduzir depoimentos (seção 2).
+export const googleProfile = {
+  eyebrow: "No Google",
+  heading: "Encontre o consultório no Google",
+  text: "No perfil profissional da Kelly você vê endereço, horário de atendimento e formas de contato em um só lugar.",
+  url: "https://share.google/8Bvmhwl1MasiXdxqA",
+  ctaLabel: "Ver perfil no Google",
+  ctaAriaLabel: "Ver o perfil profissional de Kelly Cavalcante no Google (abre em nova aba)",
 } as const;
 
 export const forWho = {
